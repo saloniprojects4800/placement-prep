@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saloni's Placement Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --card2: #1a1a26;
+    --border: #2a2a3a;
+    --accent1: #7c3aed;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --accent5: #f43f5e;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --done: #10b981;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated bg */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 60px 0 40px;
+    position: relative;
+  }
+
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #7c3aed, #06b6d4, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-top: 10px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* Progress overview */
+  .progress-bar-outer {
+    background: var(--border);
+    border-radius: 100px;
+    height: 10px;
+    overflow: hidden;
+    margin: 24px 0 8px;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar-inner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .progress-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .progress-count {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent2);
+  }
+
+  /* Section pills */
+  .section-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 36px 0 24px;
+  }
+
+  .tab-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .tab-btn:hover {
+    border-color: var(--accent1);
+    color: var(--text);
+  }
+
+  .tab-btn.active {
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .tab-btn.active[data-section="all"] { background: linear-gradient(135deg, #7c3aed, #06b6d4); }
+  .tab-btn.active[data-section="prob"] { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+  .tab-btn.active[data-section="stats"] { background: linear-gradient(135deg, #06b6d4, #0ea5e9); }
+  .tab-btn.active[data-section="sql"] { background: linear-gradient(135deg, #f59e0b, #f97316); }
+  .tab-btn.active[data-section="python"] { background: linear-gradient(135deg, #10b981, #059669); }
+  .tab-btn.active[data-section="ml"] { background: linear-gradient(135deg, #f43f5e, #ec4899); }
+  .tab-btn.active[data-section="dsa"] { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+
+  /* DSA Section */
+  .dsa-section { display: none; }
+  .dsa-section.visible { display: block; }
+
+  .dsa-intro {
+    text-align: center;
+    padding: 20px 0 32px;
+  }
+
+  .dsa-intro h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+
+  .dsa-intro p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  .dsa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .dsa-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .dsa-card:hover {
+    border-color: #3a3a5a;
+    transform: translateY(-2px);
+  }
+
+  .dsa-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: #6366f1;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .dsa-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .dsa-card-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .coming-soon-badge {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #8b5cf6;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+  }
+
+  .tab-count {
+    background: rgba(255,255,255,0.15);
+    padding: 1px 7px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+  }
+
+  /* Topic cards */
+  .topics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-header {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 28px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .section-header .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .section-header.prob .dot { background: #a855f7; box-shadow: 0 0 12px #a855f7; }
+  .section-header.stats .dot { background: #06b6d4; box-shadow: 0 0 12px #06b6d4; }
+  .section-header.sql .dot { background: #f59e0b; box-shadow: 0 0 12px #f59e0b; }
+  .section-header.python .dot { background: #10b981; box-shadow: 0 0 12px #10b981; }
+  .section-header.ml .dot { background: #f43f5e; box-shadow: 0 0 12px #f43f5e; }
+
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    transition: opacity 0.25s;
+    opacity: 0;
+  }
+
+  .topic-card.prob::before { background: #a855f7; }
+  .topic-card.stats::before { background: #06b6d4; }
+  .topic-card.sql::before { background: #f59e0b; }
+  .topic-card.python::before { background: #10b981; }
+  .topic-card.ml::before { background: #f43f5e; }
+
+  .topic-card:hover {
+    border-color: #3a3a5a;
+    transform: translateY(-1px);
+    background: var(--card2);
+  }
+
+  .topic-card:hover::before { opacity: 1; }
+
+  .topic-card.done {
+    background: rgba(16, 185, 129, 0.04);
+    border-color: rgba(16, 185, 129, 0.25);
+  }
+
+  .topic-card.done::before { opacity: 1; background: #10b981 !important; }
+
+  /* Checkbox */
+  .check-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    margin-top: 1px;
+  }
+
+  .topic-card.done .check-box {
+    background: var(--done);
+    border-color: var(--done);
+  }
+
+  .check-icon {
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s;
+  }
+
+  .topic-card.done .check-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .topic-content { flex: 1; min-width: 0; }
+
+  .topic-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+
+  .topic-card.done .topic-title {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(16,185,129,0.5);
+  }
+
+  .subtopics {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .topic-card.expanded .subtopics { display: block; }
+
+  .subtopics ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .subtopics li {
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding: 2px 0;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .subtopics li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--accent1);
+  }
+
+  .expand-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 4px;
+    transition: color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .topic-card.expanded .expand-btn { transform: rotate(180deg); color: var(--accent2); }
+
+  /* Motivational banner */
+  .moti-banner {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 20px 0 0;
+    text-align: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    display: none;
+  }
+
+  .moti-banner.show { display: block; }
+
+  /* Reset btn */
+  .reset-area {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .reset-btn:hover { border-color: var(--accent5); color: var(--accent5); }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 12px 16px 12px 44px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--accent1); }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  .hidden { display: none !important; }
+
+  /* Confetti star */
+  .star-pop {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-size: 22px;
+    animation: starfly 1s forwards;
+  }
+
+  @keyframes starfly {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Saloni's Placement Prep</h1>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-stats">
+      <span><span class="progress-count" id="doneCount">0</span> completed</span>
+      <span id="pctText">0% done</span>
+      <span><span class="progress-count" id="totalCount">0</span> total</span>
+    </div>
+  </header>
+
+  <div id="motiBanner" class="moti-banner">Good start — keep the momentum going.</div>
+
+  <div class="search-wrap">
+    <span class="search-icon" style="font-size:15px;color:var(--muted);">&#9906;</span>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search topics..." />
+  </div>
+
+  <div class="section-tabs" id="tabs">
+    <button class="tab-btn active" data-section="all">All <span class="tab-count" id="cnt-all">0</span></button>
+    <button class="tab-btn" data-section="prob">Probability <span class="tab-count" id="cnt-prob">0</span></button>
+    <button class="tab-btn" data-section="stats">Statistics <span class="tab-count" id="cnt-stats">0</span></button>
+    <button class="tab-btn" data-section="sql">SQL <span class="tab-count" id="cnt-sql">0</span></button>
+    <button class="tab-btn" data-section="python">Python <span class="tab-count" id="cnt-python">0</span></button>
+    <button class="tab-btn" data-section="ml">ML <span class="tab-count" id="cnt-ml">0</span></button>
+    <button class="tab-btn" data-section="dsa">DSA Problems</button>
+  </div>
+
+  <div class="topics-list" id="topicsList"></div>
+
+  <div class="dsa-section" id="dsaSection">
+    <div class="dsa-intro">
+      <h2>DSA Problems</h2>
+      <p>Problem sets and links will be added here. Sections are ready — content coming soon.</p>
+    </div>
+    <div class="dsa-grid">
+      <div class="dsa-card">
+        <div class="dsa-card-title">Arrays & Strings</div>
+        <div class="dsa-card-desc">Two pointers, sliding window, prefix sums, and classic array manipulation problems.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Linked Lists</div>
+        <div class="dsa-card-desc">Reversal, cycle detection, merge, and pointer manipulation patterns.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Stacks & Queues</div>
+        <div class="dsa-card-desc">Monotonic stack, BFS with queues, and expression evaluation problems.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Trees & Binary Search Trees</div>
+        <div class="dsa-card-desc">Traversals, LCA, height, diameter, and BST property problems.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Graphs</div>
+        <div class="dsa-card-desc">BFS, DFS, topological sort, shortest paths, and connected components.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Dynamic Programming</div>
+        <div class="dsa-card-desc">1D/2D DP, knapsack, LCS, LIS, and memoization patterns.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Binary Search</div>
+        <div class="dsa-card-desc">Search on sorted arrays, rotated arrays, and binary search on answer.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Heaps & Priority Queues</div>
+        <div class="dsa-card-desc">Top-K elements, merge K sorted lists, and scheduling problems.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Recursion & Backtracking</div>
+        <div class="dsa-card-desc">Subsets, permutations, N-Queens, and constraint satisfaction problems.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Hashing</div>
+        <div class="dsa-card-desc">Hash maps, frequency counting, anagram detection, and two-sum patterns.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Sorting & Searching</div>
+        <div class="dsa-card-desc">Merge sort, quick sort, counting sort, and order statistics problems.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="dsa-card">
+        <div class="dsa-card-title">Greedy Algorithms</div>
+        <div class="dsa-card-desc">Interval scheduling, activity selection, and greedy proof patterns.</div>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-area">
+    <button class="reset-btn" onclick="resetAll()">Reset all progress</button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'saloni_placement_checklist_v1';
+
+const data = [
+  { section: 'prob', label: 'Probability Theory', topics: [
+    { title: 'Foundations of Probability', subs: ['Sample space','Events','Sigma-algebra (σ-algebra)','Axioms of probability','Probability measure','Finite vs infinite sample spaces','Countable vs uncountable spaces','Equally likely outcomes','Classical probability','Relative frequency interpretation','Subjective probability'] },
+    { title: 'Combinatorics', subs: ['Permutations','Combinations','Multiset permutations','Combinations with repetition','Inclusion–exclusion principle','Pigeonhole principle','Derangements','Counting using generating functions','Balls and bins problems'] },
+    { title: 'Conditional Probability & Independence', subs: ["Conditional probability definition","Law of total probability","Bayes' theorem","Posterior, prior, likelihood","Chain rule of probability","Pairwise independence","Mutual independence","Conditional independence","Independence vs uncorrelated","Bayes classifier intuition"] },
+    { title: 'Discrete Random Variables', subs: ['Probability mass function (PMF)','Cumulative distribution function (CDF)','Support of a random variable','Expectation','Variance','Higher moments','Factorial moments'] },
+    { title: 'Continuous Random Variables', subs: ['Probability density function (PDF)','CDF for continuous RVs','Properties of PDF','Expectation using integrals','Variance using integrals','Change of variables technique'] },
+    { title: 'Important Discrete Distributions', subs: ['Bernoulli','Binomial','Geometric','Negative Binomial','Hypergeometric','Poisson','Discrete uniform','Multinomial','PMF / Mean / Variance / MGF for each'] },
+    { title: 'Important Continuous Distributions', subs: ['Uniform','Exponential','Gamma','Beta','Normal (Gaussian)','Log-normal','Chi-square','t-distribution','F-distribution','Weibull','Pareto','PDF / Mean / Variance / MGF for each'] },
+    { title: 'Joint Distributions', subs: ['Joint PMF / PDF','Joint CDF','Marginal distributions','Conditional distributions','Independence of random variables','Transformations of random variables','Jacobian method','Order statistics','Min / Max of random variables'] },
+    { title: 'Expectation & Moments', subs: ['Linearity of expectation','Expectation of functions of RVs','Indicator random variables','LOTUS','Variance formula','Covariance','Correlation coefficient','Properties of covariance','Covariance matrix'] },
+    { title: 'Inequalities', subs: ['Markov inequality','Chebyshev inequality',"Jensen's inequality","Cauchy Schwarz inequality"] },
+    { title: 'Convergence Concepts', subs: ['Almost sure convergence','Convergence in probability','Convergence in distribution','Convergence in mean (L¹, L²)','Relationships between types','Slutsky\'s theorem','Continuous mapping theorem'] },
+    { title: 'Laws & Theorems', subs: ['Law of Large Numbers (Weak & Strong)','Central Limit Theorem','Multivariate CLT','Delta method','Law of iterated expectations','Law of total variance'] },
+    { title: 'Generating Functions', subs: ['Moment generating function (MGF)','Properties of MGF','MGF of common distributions','Using MGF to find moments','Characteristic function (CF)','Inversion theorem','Probability generating function (PGF)'] },
+    { title: 'Conditional Expectation', subs: ['Definition of conditional expectation','Conditional expectation given an event','Conditional expectation given a RV','Conditional variance','Doob–Dynkin lemma'] },
+    { title: 'Stochastic Processes (Basics)', subs: ['Definition of stochastic process','Discrete-time vs continuous-time','Bernoulli process','Random walk','Markov chains','Transition matrix','Chapman–Kolmogorov equations','Stationary distribution','Absorbing states','Ergodicity'] },
+    { title: 'Probability in ML Context', subs: ['Probabilistic modeling','Likelihood function','Log-likelihood','Maximum likelihood principle','MAP estimation','Naive Bayes classifier','Generative vs discriminative models','Bayesian networks','Hidden Markov Models'] },
+    { title: 'Interview Probability Topics', subs: ['Conditional probability puzzles','Bayes theorem puzzles','Expected value puzzles','RV transformation questions','Distribution identification problems','Coin / dice / card problems','Real-life modeling questions'] },
+  ]},
+  { section: 'stats', label: 'Statistical Inference', topics: [
+    { title: 'A/B Testing Interview Questions', subs: ['Check randomness of bucket assignment','Benefits of A/A test','Peeking hazards in A/B test','Blog coverage impact','A/B test on opt-in features','Multiple variants (20+)','Right-skewed observations','Running two simultaneous experiments','p-value & Type-1/2 errors','Latency impact on engagement','MLE existence edge cases','MAP vs MOM vs MLE','Confidence interval interpretation','Unbiasedness property','Selection Bias'] },
+    { title: 'Foundations of Statistical Inference', subs: ['Population vs sample','Parameter vs statistic','Statistical model','Parametric / Non-parametric / Semi-parametric models','Identifiability','Likelihood function','Log-likelihood','Score function','Fisher information','Sampling distributions','Sufficiency','Minimal sufficient statistic'] },
+    { title: 'Estimators & Properties', subs: ['Definition of estimator','Bias of an estimator','Unbiased estimator','Mean squared error (MSE)','Consistency','Efficiency','Asymptotic unbiasedness','Asymptotic normality','Relative efficiency'] },
+    { title: 'Common Estimation Methods', subs: ['Method of Moments (MoM)','Maximum Likelihood Estimation (MLE)','Bayesian estimation','Plug-in estimators'] },
+    { title: 'Maximum Likelihood Estimation (MLE)', subs: ['Likelihood vs probability','Log-likelihood maximization','Score equation','Hessian of log-likelihood','MLE for Bernoulli / Binomial / Poisson / Normal / Exponential / Gamma','Invariance property','Bias of MLE','Consistency','Asymptotic normality','Cramér–Rao lower bound (CRLB)','Efficiency of MLE'] },
+    { title: 'Confidence Intervals', subs: ['Confidence interval definition','Confidence level','Pivotal quantities','Exact confidence intervals','CI for mean (known/unknown variance)','CI for difference of means','CI for proportion','CI for variance','Bootstrap confidence intervals'] },
+    { title: 'Hypothesis Testing Basics', subs: ['Null hypothesis (H₀)','Alternative hypothesis (H₁)','Simple vs composite hypotheses','Test statistic','Rejection region','Significance level (α)','p-value','One-sided vs two-sided tests'] },
+    { title: 'Errors & Power', subs: ['Type I error','Type II error','Power of a test','Power function','Trade-off between α and β'] },
+    { title: 'Classical Hypothesis Tests', subs: ['Z-test','One-sample t-test','Two-sample t-test','Paired t-test','Chi-square test','F-test','Goodness-of-fit tests','Tests for independence','Tests for homogeneity'] },
+    { title: 'LRT, Wald, Score Tests', subs: ['Likelihood Ratio Test (LRT)','Wald test','Score (Rao) test','Relationship between the three','Asymptotic chi-square distribution'] },
+    { title: 'Bayesian Inference', subs: ['Prior distribution','Likelihood','Posterior distribution','Posterior mean','Posterior mode (MAP)','Credible intervals','Beta–Binomial conjugacy','Gamma–Poisson conjugacy','Normal–Normal conjugacy','Bayesian vs Frequentist comparison'] },
+    { title: 'Sufficiency & Optimality', subs: ['Sufficient statistic','Factorization theorem','Minimal sufficient statistic','Complete statistic','Lehmann–Scheffé theorem','Rao–Blackwell theorem','UMVUE'] },
+    { title: 'Asymptotic Theory', subs: ['LLN (review)','CLT (review)','Delta method','Slutsky\'s theorem','Asymptotic distribution of estimators','Asymptotic CIs and tests'] },
+    { title: 'Resampling Methods', subs: ['Bootstrap sampling','Bootstrap bias/variance estimation','Bootstrap confidence intervals','Jackknife method','Cross-validation (statistical view)'] },
+    { title: 'Model Selection & Information Criteria', subs: ['AIC','BIC','Likelihood vs penalized likelihood','Bias–variance trade-off','Overfitting & underfitting'] },
+    { title: 'Statistical Inference in ML', subs: ['Loss functions as likelihoods','Empirical risk minimization','Regularization as prior','Ridge (Bayesian view)','Lasso (MAP intuition)','Logistic regression as MLE','Probabilistic interpretation of ML'] },
+  ]},
+  { section: 'sql', label: 'SQL', topics: [
+    { title: 'SQL Fundamentals', subs: ['What is SQL?','Relational databases','Tables / rows / columns','Primary key','Foreign key','Candidate & Composite keys','Schema','Constraints (NOT NULL, UNIQUE, FK, CHECK)','NULL vs empty values','Data types (INT, FLOAT, CHAR, VARCHAR, DATE, BOOLEAN)'] },
+    { title: 'Basic Querying', subs: ['SELECT statement','DISTINCT','WHERE clause','Logical operators (AND, OR, NOT)','Comparison operators','BETWEEN, IN, LIKE','IS NULL / IS NOT NULL','ORDER BY','LIMIT / OFFSET','Aliases (AS)'] },
+    { title: 'Aggregate Functions', subs: ['COUNT, SUM, AVG, MIN, MAX','COUNT vs COUNT(*)','Aggregates with NULLs','GROUP BY','HAVING','GROUP BY vs WHERE','Multiple aggregations'] },
+    { title: 'Joins (EXTREMELY IMPORTANT)', subs: ['INNER JOIN','LEFT JOIN','RIGHT JOIN','FULL OUTER JOIN','CROSS JOIN','Self join','Join on multiple keys','Join vs subquery','Cartesian product pitfalls','Handling NULLs in joins','Join performance basics'] },
+    { title: 'Subqueries', subs: ['Subqueries in SELECT / WHERE / FROM','Correlated subqueries','EXISTS vs IN','ANY / ALL','Scalar subqueries','Common interview pitfalls'] },
+    { title: 'Window Functions', subs: ['OVER() clause','PARTITION BY','ORDER BY inside window','ROW_NUMBER','RANK','DENSE_RANK','LAG, LEAD','FIRST_VALUE, LAST_VALUE','Moving averages','Cumulative sums','Window functions vs GROUP BY'] },
+    { title: 'Conditional Logic', subs: ['CASE WHEN','IF / IFNULL / COALESCE','Handling NULL values','Conditional aggregation','Creating flags & indicators'] },
+    { title: 'Date & Time Functions', subs: ['DATE, TIMESTAMP','EXTRACT, DATE_PART','DATE_ADD / DATE_SUB','DATEDIFF','Current date/time','Time zones (basic idea)','Rolling time windows','Month-over-month calculations'] },
+    { title: 'Set Operations', subs: ['UNION','UNION ALL','INTERSECT','EXCEPT / MINUS','Differences between set operators'] },
+    { title: 'Data Modification Commands', subs: ['INSERT, UPDATE, DELETE, TRUNCATE','MERGE / UPSERT (concept)','Transactions (COMMIT, ROLLBACK, SAVEPOINT)'] },
+    { title: 'Table & Schema Management', subs: ['CREATE TABLE','DROP TABLE','ALTER TABLE','CREATE INDEX','Views','Materialized views'] },
+    { title: 'Performance & Optimization', subs: ['Indexing basics','B-tree index','Query execution plan','EXPLAIN','Index on join columns','Avoiding full table scans','Partitioning (concept)'] },
+    { title: 'Analytical SQL Patterns', subs: ['Top-k per group','Second highest value','Running totals','Gaps and islands','Sessionization','Pivoting / unpivoting'] },
+    { title: 'SQL for Data Science Workflows', subs: ['Data cleaning in SQL','Feature creation in SQL','A/B test analysis in SQL','Funnel analysis','Cohort analysis','Retention metrics'] },
+    { title: 'SQL Dialects (Awareness)', subs: ['MySQL','PostgreSQL','SQL Server','SQLite','BigQuery','Redshift'] },
+  ]},
+  { section: 'python', label: 'Python & Libraries', topics: [
+    { title: 'Python Fundamentals', subs: ['Data types','Control flow','Functions & lambda','List comprehensions','Decorators','Generators','OOP basics','Exception handling','File I/O','Modules & packages'] },
+    { title: 'Python OOP', subs: ['Classes & objects','Inheritance','Polymorphism','Encapsulation','Abstract classes','Magic/dunder methods','Class vs instance variables','Static & class methods'] },
+    { title: 'NumPy', subs: ['Arrays & operations','Broadcasting','Indexing & slicing','Linear algebra ops','Random number generation','Performance vs Python lists'] },
+    { title: 'Pandas', subs: ['Series & DataFrame','Data loading (CSV, Excel, SQL)','Filtering & selection','GroupBy','Merge / Join','Handling missing values','Apply & transform','Time series with Pandas'] },
+    { title: 'Scikit-learn', subs: ['Estimator API','Pipeline','Train/test split','Cross-validation','Preprocessing (StandardScaler, LabelEncoder)','Model selection','Metrics'] },
+    { title: 'Matplotlib & Seaborn', subs: ['Line, bar, scatter plots','Histograms & KDE','Heatmaps','Subplots','Styling & annotations'] },
+  ]},
+  { section: 'ml', label: 'Machine Learning', topics: [
+    { title: 'ML Basics', subs: ['What is Machine Learning?','Supervised / Unsupervised / Reinforcement learning','Bias-variance tradeoff','Overfitting & underfitting','Training vs test vs validation set'] },
+    { title: 'Data Preprocessing & Feature Engineering', subs: ['Data cleaning','Handling missing values','Encoding categorical variables','Feature scaling','Feature selection','Dimensionality reduction','Handling imbalanced data','Train/test split strategies'] },
+    { title: 'Model Evaluation & Validation', subs: ['Hold-out validation','k-fold cross-validation','Stratified k-fold','Leave-one-out CV','Evaluation metrics: Accuracy, Precision, Recall, F1','ROC-AUC','Confusion matrix','Regression metrics (RMSE, MAE, R²)'] },
+    { title: 'Linear Regression', subs: ['Model formulation','OLS derivation','Loss function (MSE)','Closed-form solution','Gradient descent solution','Assumptions of linear regression','Residual analysis','Multicollinearity'] },
+    { title: 'Regularized Regression', subs: ['Ridge regression (L2)','Lasso regression (L1)','Elastic Net','Regularization parameter λ','Effect on coefficients','When to use which'] },
+    { title: 'Logistic Regression (Very Important)', subs: ['Binary classification formulation','Sigmoid function','Decision boundary','Log-loss / Cross-entropy','MLE derivation','Gradient of log-loss','Multi-class (softmax)','Regularization in logistic regression'] },
+    { title: 'Decision Trees', subs: ['Tree structure','Splitting criteria (Gini, Entropy, Info Gain)','Stopping criteria','Pruning','Advantages & disadvantages','Handling categorical variables','Feature importance'] },
+    { title: 'Ensemble Methods', subs: ['Bagging','Random Forest','Feature importance','Bias–variance reduction in ensembles','Out-of-bag error'] },
+    { title: 'Boosting', subs: ['Boosting intuition','AdaBoost','Gradient Boosting','XGBoost (conceptual)','LightGBM (awareness)','Early stopping','Hyperparameter tuning'] },
+    { title: 'Support Vector Machines (SVM)', subs: ['Maximum margin classifier','Hard margin vs soft margin','Support vectors','Kernel trick','RBF kernel','SVM for regression (SVR)'] },
+    { title: 'k-Nearest Neighbors (kNN)', subs: ['Distance metrics (Euclidean, Manhattan, Cosine)','Choosing k','Curse of dimensionality','kNN for classification vs regression'] },
+    { title: 'Clustering', subs: ['k-means','Initialization issues (k-means++)','Choosing number of clusters (Elbow, Silhouette)','k-medoids','DBSCAN','Hierarchical clustering','Evaluation metrics (Silhouette, Davies-Bouldin)'] },
+    { title: 'Dimensionality Reduction', subs: ['PCA: Covariance matrix, Eigen decomposition, Explained variance ratio','Selecting number of components','t-SNE (for visualization)','UMAP (awareness)','LDA'] },
+    { title: 'Probabilistic & Bayesian ML', subs: ['Naive Bayes classifier','Gaussian Naive Bayes','Multinomial Naive Bayes','Gaussian Mixture Models (GMM)','EM algorithm (intuition)'] },
+    { title: 'Optimization for ML', subs: ['Loss functions','Gradient descent (Batch / SGD / Mini-batch)','Learning rate','Momentum, AdaGrad, RMSProp, Adam','Convergence and local minima','Convex vs non-convex optimization'] },
+    { title: 'Model Selection & Hyperparameter Tuning', subs: ['Grid search','Random search','Cross-validation for model selection','AIC/BIC','Learning curves','Validation curves'] },
+    { title: 'Interpretability & Explainability', subs: ['Feature importance','Partial dependence plots','SHAP values','LIME','Model-agnostic methods'] },
+    { title: 'ML in Production', subs: ['Training vs inference','Batch prediction','Real-time prediction','Model drift','Retraining strategies','A/B testing ML models'] },
+  ]},
+];
+
+const sectionColors = { prob: '#a855f7', stats: '#06b6d4', sql: '#f59e0b', python: '#10b981', ml: '#f43f5e' };
+const sectionEmojis = { prob: '', stats: '', sql: '', python: '', ml: '' };
+
+let checkedState = {};
+let currentSection = 'all';
+let searchQuery = '';
+
+function loadState() {
+  try { checkedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { checkedState = {}; }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState));
+}
+
+function getTopicKey(section, topicIdx) {
+  return `${section}_${topicIdx}`;
+}
+
+function countForSection(section) {
+  const sec = data.find(d => d.section === section);
+  if (!sec) return { total: 0, done: 0 };
+  let total = sec.topics.length, done = 0;
+  sec.topics.forEach((_, i) => { if (checkedState[getTopicKey(section, i)]) done++; });
+  return { total, done };
+}
+
+function updateProgress() {
+  let total = 0, done = 0;
+  data.forEach(sec => {
+    sec.topics.forEach((_, i) => {
+      total++;
+      if (checkedState[getTopicKey(sec.section, i)]) done++;
+    });
+  });
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('pctText').textContent = pct + '% done';
+  document.getElementById('cnt-all').textContent = total;
+
+  data.forEach(sec => {
+    const { total: t, done: d } = countForSection(sec.section);
+    const el = document.getElementById(`cnt-${sec.section}`);
+    if (el) el.textContent = `${d}/${t}`;
+  });
+
+  // Motivational
+  const banner = document.getElementById('motiBanner');
+  const quotes = [
+    "Good start — keep the momentum going.",
+    "25% done. Solid progress, keep pushing.",
+    "Halfway there. Stay consistent.",
+    "75% done. The finish line is close.",
+    "100% complete. Every topic covered."
+  ];
+  if (pct === 0) { banner.classList.remove('show'); }
+  else if (pct < 25) { banner.textContent = quotes[0]; banner.classList.add('show'); }
+  else if (pct < 50) { banner.textContent = quotes[1]; banner.classList.add('show'); }
+  else if (pct < 75) { banner.textContent = quotes[2]; banner.classList.add('show'); }
+  else if (pct < 100) { banner.textContent = quotes[3]; banner.classList.add('show'); }
+  else { banner.textContent = quotes[4]; banner.classList.add('show'); }
+}
+
+function spawnStar(x, y) {
+  const el = document.createElement('div');
+  el.className = 'star-pop';
+  el.textContent = '+1';
+  el.style.left = x + 'px';
+  el.style.top = (y - 10) + 'px';
+  el.style.color = '#10b981';
+  el.style.fontFamily = "'Syne', sans-serif";
+  el.style.fontWeight = '700';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1000);
+}
+
+function renderTopics() {
+  const list = document.getElementById('topicsList');
+  list.innerHTML = '';
+
+  data.forEach(sec => {
+    if (currentSection !== 'all' && currentSection !== sec.section) return;
+
+    const header = document.createElement('div');
+    header.className = `section-header ${sec.section}`;
+    header.innerHTML = `<span class="dot"></span>${sectionEmojis[sec.section]} ${sec.label}`;
+    header.style.color = sectionColors[sec.section];
+
+    let headerAdded = false;
+
+    sec.topics.forEach((topic, i) => {
+      const key = getTopicKey(sec.section, i);
+      const fullText = (topic.title + ' ' + (topic.subs || []).join(' ')).toLowerCase();
+      if (searchQuery && !fullText.includes(searchQuery.toLowerCase())) return;
+
+      if (!headerAdded) { list.appendChild(header); headerAdded = true; }
+
+      const card = document.createElement('div');
+      card.className = `topic-card ${sec.section}${checkedState[key] ? ' done' : ''}`;
+      card.dataset.key = key;
+
+      const subsHtml = topic.subs && topic.subs.length
+        ? `<div class="subtopics"><ul>${topic.subs.map(s => `<li>${s}</li>`).join('')}</ul></div>` : '';
+
+      card.innerHTML = `
+        <div class="check-box"><span class="check-icon">✓</span></div>
+        <div class="topic-content">
+          <div class="topic-title">${topic.title}</div>
+          ${subsHtml}
+        </div>
+        ${topic.subs && topic.subs.length ? '<button class="expand-btn" title="Show subtopics">▾</button>' : ''}
+      `;
+
+      const checkBox = card.querySelector('.check-box');
+      const expandBtn = card.querySelector('.expand-btn');
+
+      checkBox.addEventListener('click', (e) => {
+        e.stopPropagation();
+        checkedState[key] = !checkedState[key];
+        saveState();
+        card.classList.toggle('done', !!checkedState[key]);
+        if (checkedState[key]) spawnStar(e.clientX, e.clientY);
+        updateProgress();
+      });
+
+      if (expandBtn) {
+        expandBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          card.classList.toggle('expanded');
+        });
+        card.querySelector('.topic-content').addEventListener('click', () => {
+          card.classList.toggle('expanded');
+        });
+      }
+
+      list.appendChild(card);
+    });
+  });
+}
+
+function resetAll() {
+  if (confirm('Reset all progress? This cannot be undone.')) {
+    checkedState = {};
+    saveState();
+    renderTopics();
+    updateProgress();
+  }
+}
+
+// Tabs
+document.getElementById('tabs').addEventListener('click', (e) => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentSection = btn.dataset.section;
+
+  const dsaSection = document.getElementById('dsaSection');
+  const topicsList = document.getElementById('topicsList');
+  const searchWrap = document.querySelector('.search-wrap');
+  const motiBanner = document.getElementById('motiBanner');
+
+  if (currentSection === 'dsa') {
+    dsaSection.classList.add('visible');
+    topicsList.style.display = 'none';
+    searchWrap.style.display = 'none';
+    motiBanner.style.display = 'none';
+  } else {
+    dsaSection.classList.remove('visible');
+    topicsList.style.display = '';
+    searchWrap.style.display = '';
+    motiBanner.style.display = '';
+    renderTopics();
+  }
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchQuery = e.target.value.trim();
+  renderTopics();
+});
+
+loadState();
+renderTopics();
+updateProgress();
+</script>
+</body>
+</html>
