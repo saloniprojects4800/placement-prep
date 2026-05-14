@@ -31,7 +31,6 @@
     overflow-x: hidden;
   }
 
-  /* Animated bg */
   body::before {
     content: '';
     position: fixed;
@@ -54,7 +53,6 @@
     z-index: 1;
   }
 
-  /* Header */
   header {
     text-align: center;
     padding: 60px 0 40px;
@@ -81,7 +79,6 @@
     letter-spacing: 0.5px;
   }
 
-  /* Progress overview */
   .progress-bar-outer {
     background: var(--border);
     border-radius: 100px;
@@ -127,7 +124,6 @@
     color: var(--accent2);
   }
 
-  /* Section pills */
   .section-tabs {
     display: flex;
     gap: 10px;
@@ -152,16 +148,9 @@
     gap: 7px;
   }
 
-  .tab-btn:hover {
-    border-color: var(--accent1);
-    color: var(--text);
-  }
+  .tab-btn:hover { border-color: var(--accent1); color: var(--text); }
 
-  .tab-btn.active {
-    color: #fff;
-    border-color: transparent;
-  }
-
+  .tab-btn.active { color: #fff; border-color: transparent; }
   .tab-btn.active[data-section="all"] { background: linear-gradient(135deg, #7c3aed, #06b6d4); }
   .tab-btn.active[data-section="prob"] { background: linear-gradient(135deg, #7c3aed, #a855f7); }
   .tab-btn.active[data-section="stats"] { background: linear-gradient(135deg, #06b6d4, #0ea5e9); }
@@ -170,88 +159,6 @@
   .tab-btn.active[data-section="ml"] { background: linear-gradient(135deg, #f43f5e, #ec4899); }
   .tab-btn.active[data-section="dsa"] { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
 
-  /* DSA Section */
-  .dsa-section { display: none; }
-  .dsa-section.visible { display: block; }
-
-  .dsa-intro {
-    text-align: center;
-    padding: 20px 0 32px;
-  }
-
-  .dsa-intro h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #8b5cf6;
-    letter-spacing: -0.3px;
-    margin-bottom: 8px;
-  }
-
-  .dsa-intro p {
-    color: var(--muted);
-    font-size: 0.9rem;
-    font-weight: 300;
-  }
-
-  .dsa-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 14px;
-  }
-
-  .dsa-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 20px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .dsa-card:hover {
-    border-color: #3a3a5a;
-    transform: translateY(-2px);
-  }
-
-  .dsa-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: #6366f1;
-    border-radius: 0 2px 2px 0;
-  }
-
-  .dsa-card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-
-  .dsa-card-desc {
-    font-size: 0.8rem;
-    color: var(--muted);
-    line-height: 1.5;
-    margin-bottom: 14px;
-  }
-
-  .coming-soon-badge {
-    display: inline-block;
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    color: #8b5cf6;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    padding: 3px 10px;
-    border-radius: 100px;
-    text-transform: uppercase;
-  }
-
   .tab-count {
     background: rgba(255,255,255,0.15);
     padding: 1px 7px;
@@ -259,12 +166,8 @@
     font-size: 0.75rem;
   }
 
-  /* Topic cards */
-  .topics-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  /* Topic cards (non-DSA) */
+  .topics-list { display: flex; flex-direction: column; gap: 10px; }
 
   .section-header {
     font-family: 'Syne', sans-serif;
@@ -278,10 +181,8 @@
   }
 
   .section-header .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
+    width: 12px; height: 12px;
+    border-radius: 50%; flex-shrink: 0;
   }
 
   .section-header.prob .dot { background: #a855f7; box-shadow: 0 0 12px #a855f7; }
@@ -307,9 +208,7 @@
   .topic-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; top: 0; bottom: 0;
     width: 3px;
     border-radius: 0 2px 2px 0;
     transition: opacity 0.25s;
@@ -322,25 +221,14 @@
   .topic-card.python::before { background: #10b981; }
   .topic-card.ml::before { background: #f43f5e; }
 
-  .topic-card:hover {
-    border-color: #3a3a5a;
-    transform: translateY(-1px);
-    background: var(--card2);
-  }
-
+  .topic-card:hover { border-color: #3a3a5a; transform: translateY(-1px); background: var(--card2); }
   .topic-card:hover::before { opacity: 1; }
 
-  .topic-card.done {
-    background: rgba(16, 185, 129, 0.04);
-    border-color: rgba(16, 185, 129, 0.25);
-  }
-
+  .topic-card.done { background: rgba(16,185,129,0.04); border-color: rgba(16,185,129,0.25); }
   .topic-card.done::before { opacity: 1; background: #10b981 !important; }
 
-  /* Checkbox */
   .check-box {
-    width: 24px;
-    height: 24px;
+    width: 24px; height: 24px;
     border-radius: 8px;
     border: 2px solid var(--border);
     flex-shrink: 0;
@@ -351,23 +239,10 @@
     margin-top: 1px;
   }
 
-  .topic-card.done .check-box {
-    background: var(--done);
-    border-color: var(--done);
-  }
+  .topic-card.done .check-box { background: var(--done); border-color: var(--done); }
 
-  .check-icon {
-    color: white;
-    font-size: 14px;
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.2s;
-  }
-
-  .topic-card.done .check-icon {
-    opacity: 1;
-    transform: scale(1);
-  }
+  .check-icon { color: white; font-size: 14px; opacity: 0; transform: scale(0); transition: all 0.2s; }
+  .topic-card.done .check-icon { opacity: 1; transform: scale(1); }
 
   .topic-content { flex: 1; min-width: 0; }
 
@@ -379,59 +254,164 @@
     transition: color 0.2s;
   }
 
-  .topic-card.done .topic-title {
-    color: var(--muted);
-    text-decoration: line-through;
-    text-decoration-color: rgba(16,185,129,0.5);
-  }
+  .topic-card.done .topic-title { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(16,185,129,0.5); }
 
-  .subtopics {
-    display: none;
-    margin-top: 10px;
-    padding: 10px 12px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 8px;
-    border: 1px solid var(--border);
-  }
-
+  .subtopics { display: none; margin-top: 10px; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border); }
   .topic-card.expanded .subtopics { display: block; }
 
-  .subtopics ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .subtopics li {
-    font-size: 0.82rem;
-    color: var(--muted);
-    padding: 2px 0;
-    padding-left: 14px;
-    position: relative;
-    line-height: 1.4;
-  }
-
-  .subtopics li::before {
-    content: '·';
-    position: absolute;
-    left: 4px;
-    color: var(--accent1);
-  }
+  .subtopics ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .subtopics li { font-size: 0.82rem; color: var(--muted); padding: 2px 0 2px 14px; position: relative; line-height: 1.4; }
+  .subtopics li::before { content: '·'; position: absolute; left: 4px; color: var(--accent1); }
 
   .expand-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 18px;
-    padding: 0 4px;
+    background: none; border: none; color: var(--muted);
+    cursor: pointer; font-size: 18px; padding: 0 4px;
     transition: color 0.2s, transform 0.2s;
-    flex-shrink: 0;
-    margin-top: 1px;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .topic-card.expanded .expand-btn { transform: rotate(180deg); color: var(--accent2); }
+
+  /* ===================== DSA SECTION ===================== */
+  .dsa-section { display: none; }
+  .dsa-section.visible { display: block; }
+
+  .dsa-header {
+    text-align: center;
+    padding: 28px 0 20px;
   }
 
-  .topic-card.expanded .expand-btn { transform: rotate(180deg); color: var(--accent2); }
+  .dsa-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dsa-header p { color: var(--muted); font-size: 0.88rem; margin-top: 6px; }
+
+  /* DSA progress bar */
+  .dsa-progress-wrap { margin: 16px 0 8px; }
+  .dsa-progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem; color: var(--muted); margin-bottom: 6px;
+  }
+  .dsa-progress-label span { font-family: 'Syne', sans-serif; font-weight: 700; color: #8b5cf6; }
+
+  .dsa-bar-outer { background: var(--border); border-radius: 100px; height: 8px; overflow: hidden; }
+  .dsa-bar-inner {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, #6366f1, #a78bfa);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* DSA search */
+  .dsa-search-wrap { position: relative; margin: 16px 0 4px; }
+  .dsa-search-input {
+    width: 100%; background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; padding: 10px 16px 10px 40px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .dsa-search-input:focus { border-color: #6366f1; }
+  .dsa-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 15px; pointer-events: none; }
+
+  /* DSA chapter */
+  .dsa-chapter { margin-bottom: 8px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--card); }
+
+  .dsa-chapter-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .dsa-chapter-header:hover { background: var(--card2); }
+
+  .chapter-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+
+  .chapter-info { flex: 1; min-width: 0; }
+  .chapter-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--text);
+  }
+  .chapter-sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  .chapter-meta { display: flex; align-items: center; gap: 10px; }
+
+  .chapter-done-badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700;
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  .chapter-chevron { color: var(--muted); font-size: 16px; transition: transform 0.25s; flex-shrink: 0; }
+  .dsa-chapter.open .chapter-chevron { transform: rotate(180deg); }
+
+  .chapter-mini-bar { height: 3px; border-radius: 0 0 0 0; }
+
+  /* Problem list inside chapter */
+  .dsa-problems { display: none; border-top: 1px solid var(--border); }
+  .dsa-chapter.open .dsa-problems { display: block; }
+
+  .dsa-problem-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 18px;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    transition: background 0.15s;
+    position: relative;
+  }
+  .dsa-problem-row:last-child { border-bottom: none; }
+  .dsa-problem-row:hover { background: rgba(255,255,255,0.025); }
+  .dsa-problem-row.pdone { background: rgba(16,185,129,0.04); }
+
+  .prob-check {
+    width: 20px; height: 20px; border-radius: 6px;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .prob-check:hover { border-color: #6366f1; }
+  .dsa-problem-row.pdone .prob-check { background: var(--done); border-color: var(--done); }
+  .prob-check-icon { color: white; font-size: 11px; opacity: 0; transform: scale(0); transition: all 0.15s; }
+  .dsa-problem-row.pdone .prob-check-icon { opacity: 1; transform: scale(1); }
+
+  .prob-name {
+    flex: 1; font-size: 0.875rem; color: var(--text);
+    transition: color 0.2s; line-height: 1.4;
+  }
+  .dsa-problem-row.pdone .prob-name { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(16,185,129,0.5); }
+
+  .prob-difficulty {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 100px;
+    flex-shrink: 0; letter-spacing: 0.3px;
+  }
+  .diff-easy { background: rgba(16,185,129,0.12); color: #10b981; }
+  .diff-medium { background: rgba(245,158,11,0.12); color: #f59e0b; }
+  .diff-hard { background: rgba(244,63,94,0.12); color: #f43f5e; }
+
+  .prob-link {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; color: #6366f1;
+    text-decoration: none; padding: 3px 8px;
+    border-radius: 6px; border: 1px solid rgba(99,102,241,0.25);
+    transition: all 0.15s; flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .prob-link:hover { background: rgba(99,102,241,0.12); border-color: #6366f1; color: #a78bfa; }
+  .prob-link.lc { border-color: rgba(245,158,11,0.25); color: #f59e0b; }
+  .prob-link.lc:hover { background: rgba(245,158,11,0.1); border-color: #f59e0b; color: #fbbf24; }
+  .prob-link.gfg { border-color: rgba(16,185,129,0.25); color: #10b981; }
+  .prob-link.gfg:hover { background: rgba(16,185,129,0.1); border-color: #10b981; color: #34d399; }
 
   /* Motivational banner */
   .moti-banner {
@@ -442,80 +422,47 @@
     margin: 20px 0 0;
     text-align: center;
     font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.1rem; font-weight: 600;
     color: var(--text);
     display: none;
   }
-
   .moti-banner.show { display: block; }
 
-  /* Reset btn */
-  .reset-area {
-    text-align: center;
-    margin-top: 40px;
-  }
-
-  .reset-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .reset-btn:hover { border-color: var(--accent5); color: var(--accent5); }
-
-  /* Search */
-  .search-wrap {
-    position: relative;
-    margin-bottom: 8px;
-  }
-
+  /* Search (non-DSA) */
+  .search-wrap { position: relative; margin-bottom: 8px; }
   .search-input {
-    width: 100%;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    padding: 12px 16px 12px 44px;
-    outline: none;
+    width: 100%; background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; padding: 12px 16px 12px 44px; outline: none;
     transition: border-color 0.2s;
   }
-
   .search-input:focus { border-color: var(--accent1); }
-
-  .search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 18px;
-    pointer-events: none;
-  }
+  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 18px; pointer-events: none; }
 
   .hidden { display: none !important; }
 
-  /* Confetti star */
-  .star-pop {
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    font-size: 22px;
-    animation: starfly 1s forwards;
+  /* Reset */
+  .reset-area { text-align: center; margin-top: 40px; }
+  .reset-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; padding: 8px 16px; border-radius: 8px;
+    cursor: pointer; transition: all 0.2s;
   }
+  .reset-btn:hover { border-color: var(--accent5); color: var(--accent5); }
 
+  /* Star pop */
+  .star-pop {
+    position: fixed; pointer-events: none; z-index: 9999;
+    font-size: 22px; animation: starfly 1s forwards;
+  }
   @keyframes starfly {
     0% { opacity: 1; transform: translateY(0) scale(1); }
     100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
   }
+
+  /* No results */
+  .no-results { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem; }
 </style>
 </head>
 <body>
@@ -534,7 +481,7 @@
 
   <div id="motiBanner" class="moti-banner">Good start — keep the momentum going.</div>
 
-  <div class="search-wrap">
+  <div class="search-wrap" id="mainSearchWrap">
     <span class="search-icon" style="font-size:15px;color:var(--muted);">&#9906;</span>
     <input class="search-input" id="searchInput" type="text" placeholder="Search topics..." />
   </div>
@@ -546,78 +493,33 @@
     <button class="tab-btn" data-section="sql">SQL <span class="tab-count" id="cnt-sql">0</span></button>
     <button class="tab-btn" data-section="python">Python <span class="tab-count" id="cnt-python">0</span></button>
     <button class="tab-btn" data-section="ml">ML <span class="tab-count" id="cnt-ml">0</span></button>
-    <button class="tab-btn" data-section="dsa">DSA Problems</button>
+    <button class="tab-btn" data-section="dsa">DSA Problems <span class="tab-count" id="cnt-dsa">0</span></button>
   </div>
 
   <div class="topics-list" id="topicsList"></div>
 
+  <!-- ===================== DSA SECTION ===================== -->
   <div class="dsa-section" id="dsaSection">
-    <div class="dsa-intro">
+    <div class="dsa-header">
       <h2>DSA Problems</h2>
-      <p>Problem sets and links will be added here. Sections are ready — content coming soon.</p>
+      <p>All the Best Saloni! 🌟</p>
     </div>
-    <div class="dsa-grid">
-      <div class="dsa-card">
-        <div class="dsa-card-title">Arrays & Strings</div>
-        <div class="dsa-card-desc">Two pointers, sliding window, prefix sums, and classic array manipulation problems.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
+
+    <div class="dsa-progress-wrap">
+      <div class="dsa-progress-label">
+        <span id="dsaDone">0</span><span style="color:var(--muted);font-family:'DM Sans';font-weight:400"> / <span id="dsaTotal">0</span> solved</span>
+        <span id="dsaPct">0%</span>
       </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Linked Lists</div>
-        <div class="dsa-card-desc">Reversal, cycle detection, merge, and pointer manipulation patterns.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Stacks & Queues</div>
-        <div class="dsa-card-desc">Monotonic stack, BFS with queues, and expression evaluation problems.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Trees & Binary Search Trees</div>
-        <div class="dsa-card-desc">Traversals, LCA, height, diameter, and BST property problems.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Graphs</div>
-        <div class="dsa-card-desc">BFS, DFS, topological sort, shortest paths, and connected components.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Dynamic Programming</div>
-        <div class="dsa-card-desc">1D/2D DP, knapsack, LCS, LIS, and memoization patterns.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Binary Search</div>
-        <div class="dsa-card-desc">Search on sorted arrays, rotated arrays, and binary search on answer.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Heaps & Priority Queues</div>
-        <div class="dsa-card-desc">Top-K elements, merge K sorted lists, and scheduling problems.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Recursion & Backtracking</div>
-        <div class="dsa-card-desc">Subsets, permutations, N-Queens, and constraint satisfaction problems.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Hashing</div>
-        <div class="dsa-card-desc">Hash maps, frequency counting, anagram detection, and two-sum patterns.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Sorting & Searching</div>
-        <div class="dsa-card-desc">Merge sort, quick sort, counting sort, and order statistics problems.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
-      <div class="dsa-card">
-        <div class="dsa-card-title">Greedy Algorithms</div>
-        <div class="dsa-card-desc">Interval scheduling, activity selection, and greedy proof patterns.</div>
-        <span class="coming-soon-badge">Coming Soon</span>
-      </div>
+      <div class="dsa-bar-outer"><div class="dsa-bar-inner" id="dsaBar" style="width:0%"></div></div>
     </div>
+
+    <div class="dsa-search-wrap">
+      <span class="dsa-search-icon">⌕</span>
+      <input class="dsa-search-input" id="dsaSearchInput" type="text" placeholder="Search problems..." />
+    </div>
+
+    <div id="dsaChapters" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;"></div>
+    <div id="dsaNoResults" class="no-results hidden">No problems match your search.</div>
   </div>
 
   <div class="reset-area">
@@ -627,7 +529,9 @@
 
 <script>
 const STORAGE_KEY = 'saloni_placement_checklist_v1';
+const DSA_STORAGE_KEY = 'saloni_dsa_checklist_v1';
 
+// ======================== NON-DSA DATA ========================
 const data = [
   { section: 'prob', label: 'Probability Theory', topics: [
     { title: 'Foundations of Probability', subs: ['Sample space','Events','Sigma-algebra (σ-algebra)','Axioms of probability','Probability measure','Finite vs infinite sample spaces','Countable vs uncountable spaces','Equally likely outcomes','Classical probability','Relative frequency interpretation','Subjective probability'] },
@@ -714,29 +618,422 @@ const data = [
 ];
 
 const sectionColors = { prob: '#a855f7', stats: '#06b6d4', sql: '#f59e0b', python: '#10b981', ml: '#f43f5e' };
-const sectionEmojis = { prob: '', stats: '', sql: '', python: '', ml: '' };
 
+// ======================== DSA DATA ========================
+// Format: { name, title, difficulty, lc (LeetCode url), gfg (GFG url) }
+// lc = LeetCode, gfg = GeeksForGeeks
+const dsaChapters = [
+  {
+    id: 'arrays', name: 'Arrays', icon: '▦', color: '#6366f1',
+    problems: [
+      { title: 'Maximum and Minimum Element in an Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/maximum-and-minimum-in-an-array/' },
+      { title: 'Reverse the Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/write-a-program-to-reverse-an-array-or-string/' },
+      { title: 'Maximum Subarray (Kadane\'s)', d: 'medium', lc: 'https://leetcode.com/problems/maximum-subarray/' },
+      { title: 'Contains Duplicate', d: 'easy', lc: 'https://leetcode.com/problems/contains-duplicate/' },
+      { title: 'Chocolate Distribution Problem', d: 'easy', gfg: 'https://www.geeksforgeeks.org/chocolate-distribution-problem/' },
+      { title: 'Search in Rotated Sorted Array', d: 'medium', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+      { title: 'Next Permutation', d: 'medium', lc: 'https://leetcode.com/problems/next-permutation/' },
+      { title: 'Best Time to Buy and Sell Stock', d: 'easy', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/' },
+      { title: 'Repeat and Missing Number', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-a-repeating-and-a-missing-number/' },
+      { title: 'Kth Largest Element in an Array', d: 'medium', lc: 'https://leetcode.com/problems/kth-largest-element-in-an-array/' },
+      { title: 'Trapping Rain Water', d: 'hard', lc: 'https://leetcode.com/problems/trapping-rain-water/' },
+      { title: 'Product of Array Except Self', d: 'medium', lc: 'https://leetcode.com/problems/product-of-array-except-self/' },
+      { title: 'Maximum Product Subarray', d: 'medium', lc: 'https://leetcode.com/problems/maximum-product-subarray/' },
+      { title: 'Find Minimum in Rotated Sorted Array', d: 'medium', lc: 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/' },
+      { title: '3Sum', d: 'medium', lc: 'https://leetcode.com/problems/3sum/' },
+      { title: 'Container With Most Water', d: 'medium', lc: 'https://leetcode.com/problems/container-with-most-water/' },
+      { title: 'Given Sum Pair', d: 'easy', gfg: 'https://www.geeksforgeeks.org/given-an-array-a-and-a-number-x-check-for-pair-in-a-with-sum-as-x/' },
+      { title: 'Kth Smallest Element', d: 'medium', gfg: 'https://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/' },
+      { title: 'Merge Overlapping Intervals', d: 'medium', lc: 'https://leetcode.com/problems/merge-intervals/' },
+      { title: 'Minimum Number of Merge Operations to Make Array Palindrome', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-minimum-number-of-merge-operations-to-make-an-array-palindrome/' },
+      { title: 'Arrange Numbers to Form Biggest Number', d: 'medium', lc: 'https://leetcode.com/problems/largest-number/' },
+      { title: 'Space Optimization Using Bit Manipulations', d: 'medium', gfg: 'https://www.geeksforgeeks.org/space-optimization-using-bit-manipulations/' },
+    ]
+  },
+  {
+    id: 'strings', name: 'Strings', icon: '≈', color: '#f59e0b',
+    problems: [
+      { title: 'Valid Palindrome', d: 'easy', lc: 'https://leetcode.com/problems/valid-palindrome/' },
+      { title: 'Valid Anagram', d: 'easy', lc: 'https://leetcode.com/problems/valid-anagram/' },
+      { title: 'Valid Parentheses', d: 'easy', lc: 'https://leetcode.com/problems/valid-parentheses/' },
+      { title: 'Remove Consecutive Characters', d: 'easy', gfg: 'https://www.geeksforgeeks.org/remove-consecutive-duplicates-string/' },
+      { title: 'Longest Common Prefix', d: 'easy', lc: 'https://leetcode.com/problems/longest-common-prefix/' },
+      { title: 'Mobile Numeric Keypad Sequence', d: 'medium', gfg: 'https://www.geeksforgeeks.org/convert-sentence-equivalent-mobile-numeric-keypad-sequence/' },
+      { title: 'Print all Duplicates in Input String', d: 'easy', gfg: 'https://www.geeksforgeeks.org/print-all-the-duplicates-in-the-input-string/' },
+      { title: 'Longest Substring without Repeating Characters', d: 'medium', lc: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/' },
+      { title: 'Longest Repeating Character Replacement', d: 'medium', lc: 'https://leetcode.com/problems/longest-repeating-character-replacement/' },
+      { title: 'Group Anagrams', d: 'medium', lc: 'https://leetcode.com/problems/group-anagrams/' },
+      { title: 'Longest Palindromic Substring', d: 'medium', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+      { title: 'Palindromic Substrings', d: 'medium', lc: 'https://leetcode.com/problems/palindromic-substrings/' },
+      { title: 'Count Palindromic Subsequences', d: 'hard', gfg: 'https://www.geeksforgeeks.org/count-palindromic-subsequences/' },
+      { title: 'Smallest Window Containing All Characters', d: 'hard', gfg: 'https://www.geeksforgeeks.org/find-smallest-window-in-a-string-containing-all-characters-of-another-string/' },
+      { title: 'Wildcard String Matching', d: 'hard', lc: 'https://leetcode.com/problems/wildcard-matching/' },
+      { title: 'Longest Prefix Suffix (KMP)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/' },
+      { title: 'Rabin-Karp Algorithm for Pattern Searching', d: 'medium', gfg: 'https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/' },
+      { title: 'Transform One String to Another (Min Operations)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/' },
+    ]
+  },
+  {
+    id: '2darrays', name: '2D Arrays', icon: '⊞', color: '#ec4899',
+    problems: [
+      { title: 'Zigzag (Diagonal) Traversal of Matrix', d: 'medium', gfg: 'https://www.geeksforgeeks.org/zigzag-or-diagonal-traversal-of-matrix/' },
+      { title: 'Set Matrix Zeroes', d: 'medium', lc: 'https://leetcode.com/problems/set-matrix-zeroes/' },
+      { title: 'Spiral Matrix', d: 'medium', lc: 'https://leetcode.com/problems/spiral-matrix/' },
+      { title: 'Rotate Image', d: 'medium', lc: 'https://leetcode.com/problems/rotate-image/' },
+      { title: 'Word Search', d: 'medium', lc: 'https://leetcode.com/problems/word-search/' },
+      { title: 'Number of Islands (DFS)', d: 'medium', lc: 'https://leetcode.com/problems/number-of-islands/' },
+      { title: "Replace 'O' with 'X' if Surrounded by 'X'", d: 'medium', lc: 'https://leetcode.com/problems/surrounded-regions/' },
+      { title: 'Find Common Element in All Rows of Sorted Matrix', d: 'easy', gfg: 'https://www.geeksforgeeks.org/find-common-element-rows-row-wise-sorted-matrix/' },
+      { title: 'Create Matrix with Alternating Rectangles of O and X', d: 'medium', gfg: 'https://www.geeksforgeeks.org/create-a-matrix-with-alternating-rectangles-of-o-and-x/' },
+      { title: 'Permute Two Arrays such that Sum of Every Pair ≥ K', d: 'medium', gfg: 'https://www.geeksforgeeks.org/permute-two-arrays-such-that-sum-of-every-pair-is-greater-or-equal-to-k/' },
+    ]
+  },
+  {
+    id: 'searchsort', name: 'Searching & Sorting', icon: '⇅', color: '#14b8a6',
+    problems: [
+      { title: 'Counting Sort', d: 'easy', gfg: 'https://www.geeksforgeeks.org/counting-sort/' },
+      { title: 'Find Common Elements in Three Sorted Arrays', d: 'easy', gfg: 'https://www.geeksforgeeks.org/find-common-elements-three-sorted-arrays/' },
+      { title: 'Searching in Array where Adjacent Differ by at Most K', d: 'easy', gfg: 'https://www.geeksforgeeks.org/searching-array-adjacent-differ-k/' },
+      { title: 'Ceiling in a Sorted Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/search-floor-and-ceil-in-a-sorted-array/' },
+      { title: 'Pair with Given Difference', d: 'easy', gfg: 'https://www.geeksforgeeks.org/find-a-pair-with-the-given-difference/' },
+      { title: 'Majority Element', d: 'easy', lc: 'https://leetcode.com/problems/majority-element/' },
+      { title: 'Count Triplets with Sum Smaller than Given Value', d: 'medium', gfg: 'https://www.geeksforgeeks.org/count-triplets-with-sum-smaller-that-a-given-value/' },
+      { title: 'Maximum Sum Subsequence with No Adjacent Elements', d: 'medium', gfg: 'https://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/' },
+      { title: 'Merge Sorted Arrays using O(1) Space', d: 'hard', gfg: 'https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-extra-space/' },
+      { title: 'Inversion of Array', d: 'medium', gfg: 'https://www.geeksforgeeks.org/counting-inversions/' },
+      { title: 'Find Duplicates in O(n) Time and O(1) Space', d: 'medium', lc: 'https://leetcode.com/problems/find-all-duplicates-in-an-array/' },
+      { title: 'Radix Sort', d: 'medium', gfg: 'https://www.geeksforgeeks.org/radix-sort/' },
+      { title: 'Product of Array except Itself', d: 'medium', lc: 'https://leetcode.com/problems/product-of-array-except-self/' },
+      { title: 'Make all Array Elements Equal', d: 'easy', gfg: 'https://www.geeksforgeeks.org/make-all-elements-of-an-array-equal-with-minimum-cost/' },
+      { title: 'Check if Reversing a Subarray Makes Array Sorted', d: 'easy', lc: 'https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/' },
+    ]
+  },
+  {
+    id: 'backtracking', name: 'Backtracking', icon: '↩', color: '#f43f5e',
+    problems: [
+      { title: 'Rat in a Maze', d: 'medium', gfg: 'https://www.geeksforgeeks.org/rat-in-a-maze-backtracking-2/' },
+      { title: 'Combination Sum', d: 'medium', lc: 'https://leetcode.com/problems/combination-sum/' },
+      { title: 'Crossword Puzzle', d: 'hard', gfg: 'https://www.geeksforgeeks.org/crossword-puzzle/' },
+      { title: 'Longest Possible Route in a Matrix with Hurdles', d: 'hard', gfg: 'https://www.geeksforgeeks.org/find-longest-possible-route-matrix-hurdles/' },
+      { title: 'N-Queen Problem (All Solutions)', d: 'hard', lc: 'https://leetcode.com/problems/n-queens/' },
+      { title: 'Solve the Sudoku', d: 'hard', lc: 'https://leetcode.com/problems/sudoku-solver/' },
+      { title: 'Partition Equal Subset Sum', d: 'medium', lc: 'https://leetcode.com/problems/partition-equal-subset-sum/' },
+      { title: 'M Coloring Problem', d: 'medium', gfg: 'https://www.geeksforgeeks.org/m-coloring-problem-backtracking-5/' },
+    ]
+  },
+  {
+    id: 'linkedlist', name: 'Linked List', icon: '⛓', color: '#a78bfa',
+    problems: [
+      { title: 'Reverse Linked List', d: 'easy', lc: 'https://leetcode.com/problems/reverse-linked-list/' },
+      { title: 'Linked List Cycle', d: 'easy', lc: 'https://leetcode.com/problems/linked-list-cycle/' },
+      { title: 'Merge Two Sorted Lists', d: 'easy', lc: 'https://leetcode.com/problems/merge-two-sorted-lists/' },
+      { title: 'Delete Node without Head Pointer', d: 'easy', gfg: 'https://www.geeksforgeeks.org/delete-a-node-from-linked-list-without-head-pointer/' },
+      { title: 'Remove Duplicates from Unsorted Linked List', d: 'easy', gfg: 'https://www.geeksforgeeks.org/remove-duplicates-from-an-unsorted-linked-list/' },
+      { title: 'Sort Linked List of 0s, 1s and 2s', d: 'easy', gfg: 'https://www.geeksforgeeks.org/sort-a-linked-list-of-0s-1s-or-2s/' },
+      { title: 'Multiply Two Numbers Represented as Linked Lists', d: 'medium', gfg: 'https://www.geeksforgeeks.org/multiply-two-numbers-represented-linked-lists/' },
+      { title: 'Remove Nth Node from End of List', d: 'medium', lc: 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/' },
+      { title: 'Reorder List', d: 'medium', lc: 'https://leetcode.com/problems/reorder-list/' },
+      { title: 'Detect and Remove Loop in Linked List', d: 'medium', gfg: 'https://www.geeksforgeeks.org/detect-and-remove-loop-in-a-linked-list/' },
+      { title: 'Intersection Point of Two Linked Lists', d: 'easy', lc: 'https://leetcode.com/problems/intersection-of-two-linked-lists/' },
+      { title: 'Flatten a Linked List with Next and Child Pointers', d: 'medium', lc: 'https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/' },
+      { title: 'Linked List in Zigzag Fashion', d: 'medium', gfg: 'https://www.geeksforgeeks.org/linked-list-in-zig-zag-fashion/' },
+      { title: 'Reverse a Doubly Linked List', d: 'easy', gfg: 'https://www.geeksforgeeks.org/reverse-a-doubly-linked-list/' },
+      { title: 'Delete Nodes with Greater Value on Right', d: 'medium', gfg: 'https://www.geeksforgeeks.org/delete-nodes-which-have-a-greater-value-on-right-side/' },
+      { title: 'Segregate Even and Odd Elements in Linked List', d: 'easy', gfg: 'https://www.geeksforgeeks.org/segregate-even-and-odd-elements-in-a-linked-list/' },
+      { title: 'Point to Next Higher Value Node (Arbitrary Pointer)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/point-arbitrary-pointer-greatest-value-right-side-node/' },
+      { title: 'Rearrange a Linked List In-place', d: 'medium', gfg: 'https://www.geeksforgeeks.org/rearrange-a-given-linked-list-in-place/' },
+      { title: 'Sort Biotonic Doubly Linked List', d: 'medium', gfg: 'https://www.geeksforgeeks.org/sort-biotonic-doubly-linked-list/' },
+    ]
+  },
+  {
+    id: 'stacksqueues', name: 'Stacks & Queues', icon: '⊨', color: '#06b6d4',
+    problems: [
+      { title: 'Implement Two Stacks in an Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/implement-two-stacks-in-an-array/' },
+      { title: 'Evaluation of Postfix Expression', d: 'easy', gfg: 'https://www.geeksforgeeks.org/stack-set-4-evaluation-postfix-expression/' },
+      { title: 'Implement Stack using Queues', d: 'easy', lc: 'https://leetcode.com/problems/implement-stack-using-queues/' },
+      { title: 'Queue Reversal', d: 'easy', gfg: 'https://www.geeksforgeeks.org/reversing-a-queue/' },
+      { title: 'Implement Stack/Queue using Deque', d: 'easy', gfg: 'https://www.geeksforgeeks.org/implement-a-stack-using-deque/' },
+      { title: 'Reverse First K Elements of Queue', d: 'easy', gfg: 'https://www.geeksforgeeks.org/reversing-first-k-elements-queue/' },
+      { title: 'Design Stack with Middle Operation', d: 'hard', gfg: 'https://www.geeksforgeeks.org/design-a-stack-with-find-middle-operation/' },
+      { title: 'Infix to Postfix', d: 'medium', gfg: 'https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/' },
+      { title: 'Design and Implement Special Stack', d: 'easy', gfg: 'https://www.geeksforgeeks.org/design-and-implement-special-stack-data-structure/' },
+      { title: 'Longest Valid Parentheses', d: 'hard', lc: 'https://leetcode.com/problems/longest-valid-parentheses/' },
+      { title: 'Find if Expression has Duplicate Parentheses', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-if-an-expression-has-duplicate-parenthesis-or-not/' },
+      { title: 'Stack Permutation Check', d: 'medium', gfg: 'https://www.geeksforgeeks.org/stack-permutations-check-if-an-array-is-stack-permutation-of-other/' },
+      { title: 'Count Natural Numbers whose Permutation is Greater', d: 'medium', gfg: 'https://www.geeksforgeeks.org/count-natural-numbers-whose-all-permutation-are-greater-than-that-number/' },
+      { title: 'Sort a Stack using Recursion', d: 'medium', gfg: 'https://www.geeksforgeeks.org/sort-a-stack-using-recursion/' },
+      { title: 'First Non-Repeating Character in Stream', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-first-non-repeating-character-stream-characters/' },
+      { title: 'The Celebrity Problem', d: 'medium', gfg: 'https://www.geeksforgeeks.org/the-celebrity-problem/' },
+      { title: 'Next Greater Element', d: 'easy', lc: 'https://leetcode.com/problems/next-greater-element-i/' },
+      { title: 'Distance of Nearest Cell (BFS)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/distance-nearest-cell-1-binary-matrix/' },
+      { title: 'Rotten Oranges', d: 'medium', lc: 'https://leetcode.com/problems/rotting-oranges/' },
+      { title: 'Next Smaller Element', d: 'medium', gfg: 'https://www.geeksforgeeks.org/next-smaller-element/' },
+      { title: 'Circular Tour (Petrol Problem)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-the-first-circular-tour-that-visits-all-petrol-pumps/' },
+    ]
+  },
+  {
+    id: 'greedy', name: 'Greedy', icon: '💡', color: '#f59e0b',
+    problems: [
+      { title: 'Activity Selection Problem', d: 'easy', gfg: 'https://www.geeksforgeeks.org/activity-selection-problem-greedy-algo-1/' },
+      { title: 'Minimum Number of Coins (Change)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/greedy-algorithm-to-find-minimum-number-of-coins/' },
+      { title: 'Minimum Sum of Two Numbers Formed from Digits', d: 'medium', gfg: 'https://www.geeksforgeeks.org/minimum-sum-two-numbers-formed-digits-array-2/' },
+      { title: 'Minimum Sum Absolute Difference of Pairs', d: 'easy', gfg: 'https://www.geeksforgeeks.org/minimum-sum-absolute-difference-pairs-two-arrays/' },
+      { title: 'Maximum Height Pyramid from Given Array', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-maximum-height-pyramid-from-the-given-array-of-objects/' },
+      { title: 'Minimum Cost to Acquire All Coins', d: 'medium', gfg: 'https://www.geeksforgeeks.org/minimum-cost-for-acquiring-all-coins-with-k-extra-coins-allowed-with-every-coin/' },
+      { title: 'Find Maximum Equal Sum of Every Three Stacks', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-maximum-equal-sum-every-three-stacks/' },
+      { title: 'Job Sequencing Problem', d: 'medium', gfg: 'https://www.geeksforgeeks.org/job-sequencing-problem/' },
+      { title: 'Egyptian Fraction', d: 'medium', gfg: 'https://www.geeksforgeeks.org/greedy-algorithm-egyptian-fraction/' },
+      { title: 'Fractional Knapsack Problem', d: 'medium', gfg: 'https://www.geeksforgeeks.org/fractional-knapsack-problem/' },
+      { title: 'Maximum Length Chain of Pairs', d: 'medium', lc: 'https://leetcode.com/problems/maximum-length-of-pair-chain/' },
+      { title: 'Smallest Number with Given Digit Sum', d: 'easy', gfg: 'https://www.geeksforgeeks.org/find-smallest-number-given-number-digits-digit-sum/' },
+      { title: 'Maximize Sum of Consecutive Differences in Circular Array', d: 'medium', gfg: 'https://www.geeksforgeeks.org/maximize-sum-consecutive-differences-circular-array/' },
+      { title: 'Paper Cut — Minimum Number of Squares', d: 'medium', gfg: 'https://www.geeksforgeeks.org/paper-cut-into-minimum-number-of-squares/' },
+      { title: 'Lexicographically Smallest Array after K Swaps', d: 'medium', gfg: 'https://www.geeksforgeeks.org/lexicographically-smallest-array-k-consecutive-swaps/' },
+      { title: 'CHOCOLA — Chocolate Breaking Problem', d: 'hard', gfg: 'https://www.geeksforgeeks.org/chocola-problem-minimize-the-cost-of-breaking-chocolate/' },
+    ]
+  },
+  {
+    id: 'binarytrees', name: 'Binary Trees', icon: '🌲', color: '#10b981',
+    problems: [
+      { title: 'Maximum Depth of Binary Tree', d: 'easy', lc: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/' },
+      { title: 'Reverse Level Order Traversal', d: 'easy', gfg: 'https://www.geeksforgeeks.org/reverse-level-order-traversal/' },
+      { title: 'Subtree of Another Tree', d: 'easy', lc: 'https://leetcode.com/problems/subtree-of-another-tree/' },
+      { title: 'Invert Binary Tree', d: 'easy', lc: 'https://leetcode.com/problems/invert-binary-tree/' },
+      { title: 'Binary Tree Level Order Traversal', d: 'medium', lc: 'https://leetcode.com/problems/binary-tree-level-order-traversal/' },
+      { title: 'Left View of Binary Tree', d: 'easy', gfg: 'https://www.geeksforgeeks.org/print-left-view-binary-tree/' },
+      { title: 'Right View of Binary Tree', d: 'easy', lc: 'https://leetcode.com/problems/binary-tree-right-side-view/' },
+      { title: 'ZigZag Tree Traversal', d: 'medium', lc: 'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/' },
+      { title: 'Create Mirror Tree', d: 'easy', gfg: 'https://www.geeksforgeeks.org/create-a-mirror-tree-from-the-given-binary-tree/' },
+      { title: 'Leaf at Same Level', d: 'easy', gfg: 'https://www.geeksforgeeks.org/check-leaves-same-level/' },
+      { title: 'Check for Balanced Tree', d: 'medium', lc: 'https://leetcode.com/problems/balanced-binary-tree/' },
+      { title: 'Transform to Sum Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/transform-the-given-binary-tree-by-replacing-each-node-with-the-sum-of-its-children/' },
+      { title: 'Check if Two Trees are Isomorphic', d: 'medium', gfg: 'https://www.geeksforgeeks.org/tree-isomorphism-problem/' },
+      { title: 'Same Tree', d: 'easy', lc: 'https://leetcode.com/problems/same-tree/' },
+      { title: 'Construct Binary Tree from Preorder and Inorder', d: 'medium', lc: 'https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/' },
+      { title: 'Height of Binary Tree', d: 'easy', gfg: 'https://www.geeksforgeeks.org/write-a-c-program-to-find-the-maximum-depth-or-height-of-a-tree/' },
+      { title: 'Diameter of a Binary Tree', d: 'easy', lc: 'https://leetcode.com/problems/diameter-of-binary-tree/' },
+      { title: 'Top View of Binary Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/print-nodes-top-view-binary-tree/' },
+      { title: 'Bottom View of Binary Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/bottom-view-binary-tree/' },
+      { title: 'Diagonal Traversal of Binary Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/diagonal-traversal-of-binary-tree/' },
+      { title: 'Boundary Traversal of Binary Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/boundary-traversal-of-binary-tree/' },
+      { title: 'Construct Binary Tree from String with Brackets', d: 'medium', lc: 'https://leetcode.com/problems/construct-binary-tree-from-string/' },
+      { title: 'Minimum Swaps to Convert Binary Tree to BST', d: 'medium', gfg: 'https://www.geeksforgeeks.org/minimum-swap-required-convert-binary-tree-binary-search-tree/' },
+      { title: 'Check for Duplicate Subtree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/check-binary-tree-contains-duplicate-subtrees-size-2/' },
+      { title: 'Check if Given Graph is Tree or Not', d: 'medium', gfg: 'https://www.geeksforgeeks.org/check-given-graph-tree/' },
+      { title: 'Lowest Common Ancestor in Binary Tree', d: 'medium', lc: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/' },
+      { title: 'Min Distance Between Two Nodes of Binary Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-distance-two-given-nodes/' },
+      { title: 'Find Duplicate Subtrees', d: 'medium', lc: 'https://leetcode.com/problems/find-duplicate-subtrees/' },
+      { title: 'Kth Ancestor of a Node in Binary Tree', d: 'medium', gfg: 'https://www.geeksforgeeks.org/kth-ancestor-node-binary-tree/' },
+    ]
+  },
+  {
+    id: 'bst', name: 'Binary Search Trees', icon: '⊹', color: '#34d399',
+    problems: [
+      { title: 'Lowest Common Ancestor of BST', d: 'easy', lc: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/' },
+      { title: 'BST Search and Insertion', d: 'easy', gfg: 'https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/' },
+      { title: 'Minimum Element in BST', d: 'easy', gfg: 'https://www.geeksforgeeks.org/find-the-minimum-element-in-a-binary-search-tree/' },
+      { title: 'Predecessor and Successor in BST', d: 'medium', gfg: 'https://www.geeksforgeeks.org/inorder-predecessor-successor-given-key-bst/' },
+      { title: 'Check whether BST Contains Dead End', d: 'medium', gfg: 'https://www.geeksforgeeks.org/check-whether-bst-contains-dead-end/' },
+      { title: 'Binary Tree to BST', d: 'medium', gfg: 'https://www.geeksforgeeks.org/binary-tree-to-binary-search-tree-conversion/' },
+      { title: 'Kth Largest Element in BST', d: 'medium', gfg: 'https://www.geeksforgeeks.org/kth-largest-element-in-bst-when-modification-to-bst-is-not-allowed/' },
+      { title: 'Validate Binary Search Tree', d: 'medium', lc: 'https://leetcode.com/problems/validate-binary-search-tree/' },
+      { title: 'Kth Smallest Element in BST', d: 'medium', lc: 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/' },
+      { title: 'Delete Node in a BST', d: 'medium', lc: 'https://leetcode.com/problems/delete-node-in-a-bst/' },
+      { title: 'Flatten BST to Sorted List', d: 'medium', gfg: 'https://www.geeksforgeeks.org/flatten-bst-to-sorted-list-increasing-order/' },
+      { title: 'Preorder to Postorder', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-postorder-traversal-of-bst-from-preorder-traversal/' },
+      { title: 'Count BST Nodes in Given Range', d: 'easy', gfg: 'https://www.geeksforgeeks.org/count-bst-nodes-that-lie-in-a-given-range/' },
+      { title: 'Populate Inorder Successor for All Nodes', d: 'medium', gfg: 'https://www.geeksforgeeks.org/populate-inorder-successor-for-all-nodes/' },
+      { title: 'Convert Normal BST to Balanced BST', d: 'medium', gfg: 'https://www.geeksforgeeks.org/convert-normal-bst-balanced-bst/' },
+      { title: 'Merge Two BSTs', d: 'hard', gfg: 'https://www.geeksforgeeks.org/merge-two-bsts-with-limited-extra-space/' },
+    ]
+  },
+  {
+    id: 'heapshashing', name: 'Heaps & Hashing', icon: '⛁', color: '#f97316',
+    problems: [
+      { title: 'Choose K Array Elements such that Difference of Max and Min is Minimized', d: 'easy', gfg: 'https://www.geeksforgeeks.org/choose-k-array-elements-such-that-difference-of-maximum-and-minimum-is-minimized/' },
+      { title: 'Heap Sort', d: 'medium', gfg: 'https://www.geeksforgeeks.org/heap-sort/' },
+      { title: 'Top K Frequent Elements', d: 'medium', lc: 'https://leetcode.com/problems/top-k-frequent-elements/' },
+      { title: 'K Largest Elements in an Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/k-largestor-smallest-elements-in-an-array/' },
+      { title: 'Next Greater Element', d: 'easy', lc: 'https://leetcode.com/problems/next-greater-element-i/' },
+      { title: "K'th Smallest/Largest Element in Unsorted Array", d: 'medium', gfg: 'https://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/' },
+      { title: 'Find Maximum Repeating Number in O(n) Time and O(1) Space', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-the-maximum-repeating-number-in-ok-time/' },
+      { title: "K-th Smallest after Removing Some Integers", d: 'hard', gfg: 'https://www.geeksforgeeks.org/k-th-smallest-element-after-removing-some-integers-from-natural-numbers/' },
+      { title: 'Find K Closest Elements to a Given Value', d: 'medium', lc: 'https://leetcode.com/problems/find-k-closest-elements/' },
+      { title: "K'th Largest Element in a Stream", d: 'easy', lc: 'https://leetcode.com/problems/kth-largest-element-in-a-stream/' },
+      { title: 'Connect Ropes with Minimum Cost', d: 'medium', gfg: 'https://www.geeksforgeeks.org/connect-n-ropes-minimum-cost/' },
+      { title: 'Cuckoo Hashing', d: 'hard', gfg: 'https://www.geeksforgeeks.org/cuckoo-hashing/' },
+      { title: 'Itinerary from a List of Tickets', d: 'hard', lc: 'https://leetcode.com/problems/reconstruct-itinerary/' },
+      { title: 'Largest Subarray with 0 Sum', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-the-largest-subarray-with-0-sum/' },
+      { title: 'Count Distinct Elements in Every Window of Size K', d: 'medium', gfg: 'https://www.geeksforgeeks.org/count-distinct-elements-in-every-window-of-size-k/' },
+      { title: 'Group Shifted Strings', d: 'medium', gfg: 'https://www.geeksforgeeks.org/group-shifted-string/' },
+    ]
+  },
+  {
+    id: 'graphs', name: 'Graphs', icon: '◎', color: '#818cf8',
+    problems: [
+      { title: 'BFS (Breadth-First Search)', d: 'easy', gfg: 'https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/' },
+      { title: 'DFS (Depth-First Search)', d: 'easy', gfg: 'https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/' },
+      { title: 'Flood Fill Algorithm', d: 'easy', lc: 'https://leetcode.com/problems/flood-fill/' },
+      { title: 'Number of Triangles in a Graph', d: 'medium', gfg: 'https://www.geeksforgeeks.org/number-of-triangles-in-a-undirected-graph/' },
+      { title: 'Detect Cycle in a Directed Graph', d: 'medium', gfg: 'https://www.geeksforgeeks.org/detect-cycle-in-a-graph/' },
+      { title: 'Detect Cycle in Undirected Graph', d: 'medium', gfg: 'https://www.geeksforgeeks.org/detect-cycle-undirected-graph/' },
+      { title: 'Rat in a Maze (Graph)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/rat-in-a-maze-backtracking-2/' },
+      { title: 'Steps by Knight', d: 'medium', gfg: 'https://www.geeksforgeeks.org/minimum-steps-reach-target-knight/' },
+      { title: 'Clone Graph', d: 'medium', lc: 'https://leetcode.com/problems/clone-graph/' },
+      { title: 'Number of Operations to Make Network Connected', d: 'medium', lc: 'https://leetcode.com/problems/number-of-operations-to-make-network-connected/' },
+      { title: "Dijkstra's Shortest Path", d: 'medium', gfg: 'https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/' },
+      { title: 'Topological Sort', d: 'medium', gfg: 'https://www.geeksforgeeks.org/topological-sorting/' },
+      { title: 'Oliver and the Game', d: 'medium', gfg: 'https://www.geeksforgeeks.org/oliver-tree-game/' },
+      { title: 'Minimum Time Taken by Each Job (DAG)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/minimum-time-taken-by-each-job-to-be-completed-given-by-a-directed-acyclic-graph/' },
+      { title: 'Find if Possible to Finish All Tasks (Course Schedule)', d: 'medium', lc: 'https://leetcode.com/problems/course-schedule/' },
+      { title: 'Find Number of Islands', d: 'medium', lc: 'https://leetcode.com/problems/number-of-islands/' },
+      { title: "Prim's Algorithm (MST)", d: 'medium', gfg: 'https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/' },
+      { title: 'Negative Weighted Cycle (Bellman-Ford)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/' },
+      { title: 'Floyd Warshall', d: 'hard', gfg: 'https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/' },
+      { title: 'Graph Coloring', d: 'hard', gfg: 'https://www.geeksforgeeks.org/graph-coloring-applications/' },
+      { title: 'Snakes and Ladders', d: 'medium', lc: 'https://leetcode.com/problems/snakes-and-ladders/' },
+      { title: "Kosaraju's Algorithm (SCCs)", d: 'hard', gfg: 'https://www.geeksforgeeks.org/strongly-connected-components/' },
+      { title: 'Journey to Moon', d: 'hard', gfg: 'https://www.geeksforgeeks.org/journey-moon/' },
+      { title: 'Vertex Cover', d: 'hard', gfg: 'https://www.geeksforgeeks.org/vertex-cover-problem-set-1-introduction-approximate-algorithm-2/' },
+      { title: 'M Coloring Problem', d: 'hard', gfg: 'https://www.geeksforgeeks.org/m-coloring-problem-backtracking-5/' },
+      { title: 'Cheapest Flights Within K Stops', d: 'medium', lc: 'https://leetcode.com/problems/cheapest-flights-within-k-stops/' },
+      { title: 'Find Path of More than K Length from Source', d: 'hard', gfg: 'https://www.geeksforgeeks.org/find-if-there-is-a-path-of-more-than-k-length-from-a-source/' },
+      { title: 'Bellman Ford Algorithm', d: 'medium', gfg: 'https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/' },
+      { title: 'Bipartite Graph', d: 'medium', lc: 'https://leetcode.com/problems/is-graph-bipartite/' },
+    ]
+  },
+  {
+    id: 'tries', name: 'Tries', icon: '𝕋', color: '#fb7185',
+    problems: [
+      { title: 'Construct a Trie from Scratch', d: 'medium', gfg: 'https://www.geeksforgeeks.org/trie-insert-and-search/' },
+      { title: 'Print Unique Rows in a Boolean Matrix', d: 'medium', gfg: 'https://www.geeksforgeeks.org/print-unique-rows/' },
+      { title: 'Word Break Problem (Trie Solution)', d: 'hard', lc: 'https://leetcode.com/problems/word-break/' },
+      { title: 'Given Sequence of Words, Print All Anagrams Together', d: 'medium', gfg: 'https://www.geeksforgeeks.org/given-a-sequence-of-words-print-all-anagrams-together/' },
+      { title: 'Find Shortest Unique Prefix for Every Word', d: 'hard', gfg: 'https://www.geeksforgeeks.org/find-all-shortest-unique-prefixes-to-represent-each-word-in-the-given-list/' },
+      { title: 'Implement a Phone Directory', d: 'medium', gfg: 'https://www.geeksforgeeks.org/implement-a-phone-directory/' },
+    ]
+  },
+  {
+    id: 'dp', name: 'Dynamic Programming', icon: '⚡', color: '#c084fc',
+    problems: [
+      { title: 'Knapsack with Duplicate Items (Unbounded Knapsack)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/unbounded-knapsack-repetition-items-allowed/' },
+      { title: 'BBT Counter', d: 'medium', gfg: 'https://www.geeksforgeeks.org/count-full-binary-trees-given-sum/' },
+      { title: 'Reach a Given Score', d: 'easy', gfg: 'https://www.geeksforgeeks.org/count-number-ways-reach-given-score-game/' },
+      { title: 'Maximum Difference of Zeros and Ones in Binary String', d: 'medium', gfg: 'https://www.geeksforgeeks.org/maximum-difference-zeros-ones-binary-string/' },
+      { title: 'Climbing Stairs', d: 'easy', lc: 'https://leetcode.com/problems/climbing-stairs/' },
+      { title: 'Permutation Coefficient', d: 'easy', gfg: 'https://www.geeksforgeeks.org/permutation-coefficient/' },
+      { title: 'Longest Repeating Subsequence', d: 'medium', gfg: 'https://www.geeksforgeeks.org/longest-repeating-subsequence/' },
+      { title: 'Pairs with Specific Difference', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-all-pairs-with-a-given-difference/' },
+      { title: 'Longest Subsequence with Difference 1', d: 'medium', gfg: 'https://www.geeksforgeeks.org/longest-subsequence-such-that-difference-between-adjacents-is-one/' },
+      { title: 'Coin Change', d: 'medium', lc: 'https://leetcode.com/problems/coin-change/' },
+      { title: 'Longest Increasing Subsequence (LIS)', d: 'medium', lc: 'https://leetcode.com/problems/longest-increasing-subsequence/' },
+      { title: 'Longest Common Subsequence (LCS)', d: 'medium', lc: 'https://leetcode.com/problems/longest-common-subsequence/' },
+      { title: 'Word Break', d: 'medium', lc: 'https://leetcode.com/problems/word-break/' },
+      { title: 'Combination Sum IV', d: 'medium', lc: 'https://leetcode.com/problems/combination-sum-iv/' },
+      { title: 'House Robber', d: 'medium', lc: 'https://leetcode.com/problems/house-robber/' },
+      { title: 'House Robber II', d: 'medium', lc: 'https://leetcode.com/problems/house-robber-ii/' },
+      { title: 'Decode Ways', d: 'medium', lc: 'https://leetcode.com/problems/decode-ways/' },
+      { title: 'Unique Paths', d: 'medium', lc: 'https://leetcode.com/problems/unique-paths/' },
+      { title: 'Jump Game', d: 'medium', lc: 'https://leetcode.com/problems/jump-game/' },
+      { title: '0/1 Knapsack Problem', d: 'medium', gfg: 'https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/' },
+      { title: 'nCr (Binomial Coefficient)', d: 'easy', gfg: 'https://www.geeksforgeeks.org/binomial-coefficient-dp-9/' },
+      { title: 'Catalan Number', d: 'medium', gfg: 'https://www.geeksforgeeks.org/program-nth-catalan-number/' },
+      { title: 'Edit Distance', d: 'hard', lc: 'https://leetcode.com/problems/edit-distance/' },
+      { title: 'Subset Sum', d: 'medium', gfg: 'https://www.geeksforgeeks.org/subset-sum-problem-dp-25/' },
+      { title: 'Gold Mine Problem', d: 'medium', gfg: 'https://www.geeksforgeeks.org/gold-mine-problem/' },
+      { title: 'Assembly Line Scheduling', d: 'medium', gfg: 'https://www.geeksforgeeks.org/assembly-line-scheduling-dp-34/' },
+      { title: 'Maximize the Cut Segments', d: 'medium', gfg: 'https://www.geeksforgeeks.org/maximize-the-number-of-segments-of-length-p-q-and-r/' },
+      { title: 'Maximum Sum Increasing Subsequence', d: 'medium', gfg: 'https://www.geeksforgeeks.org/maximum-sum-increasing-subsequence/' },
+      { title: 'Count Subsequences with Product Less than K', d: 'medium', gfg: 'https://www.geeksforgeeks.org/count-subsequences-product-less-k/' },
+      { title: 'Egg Dropping Puzzle', d: 'hard', lc: 'https://leetcode.com/problems/super-egg-drop/' },
+      { title: 'Max Length Chain of Pairs', d: 'medium', lc: 'https://leetcode.com/problems/maximum-length-of-pair-chain/' },
+      { title: 'Largest Square Submatrix of 1s', d: 'medium', lc: 'https://leetcode.com/problems/maximal-square/' },
+      { title: 'Maximum Path Sum in Matrix', d: 'medium', lc: 'https://leetcode.com/problems/triangle/' },
+      { title: 'Minimum Number of Jumps', d: 'hard', gfg: 'https://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/' },
+      { title: 'Minimum Removals to Make Max - Min ≤ K', d: 'hard', gfg: 'https://www.geeksforgeeks.org/minimum-removals-array-make-max-min-k/' },
+      { title: 'Longest Common Substring', d: 'medium', gfg: 'https://www.geeksforgeeks.org/longest-common-substring-dp-29/' },
+      { title: 'Partition Equal Subset Sum', d: 'medium', lc: 'https://leetcode.com/problems/partition-equal-subset-sum/' },
+      { title: 'Longest Palindromic Subsequence', d: 'medium', lc: 'https://leetcode.com/problems/longest-palindromic-subsequence/' },
+      { title: 'Count Palindromic Subsequences', d: 'hard', gfg: 'https://www.geeksforgeeks.org/count-palindromic-subsequences/' },
+      { title: 'Longest Palindromic Substring', d: 'medium', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+      { title: 'Longest Alternating Subsequence', d: 'medium', gfg: 'https://www.geeksforgeeks.org/longest-alternating-subsequence/' },
+      { title: 'Weighted Job Scheduling', d: 'hard', gfg: 'https://www.geeksforgeeks.org/weighted-job-scheduling/' },
+      { title: 'Coin Game Winner', d: 'medium', gfg: 'https://www.geeksforgeeks.org/coin-game-winner-every-player-three-choices/' },
+      { title: 'Optimal Strategy for a Game', d: 'medium', gfg: 'https://www.geeksforgeeks.org/optimal-strategy-for-a-game-dp-31/' },
+      { title: 'Word Wrap Problem', d: 'hard', gfg: 'https://www.geeksforgeeks.org/word-wrap-problem-dp-19/' },
+      { title: 'Mobile Numeric Keypad DP', d: 'medium', gfg: 'https://www.geeksforgeeks.org/mobile-numeric-keypad-problem/' },
+      { title: 'Maximum Length of Pair Chain', d: 'medium', lc: 'https://leetcode.com/problems/maximum-length-of-pair-chain/' },
+      { title: 'Matrix Chain Multiplication', d: 'hard', gfg: 'https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/' },
+      { title: 'Maximum Profit by Buying and Selling Share at Most Twice', d: 'hard', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/' },
+      { title: 'Optimal Binary Search Tree', d: 'hard', gfg: 'https://www.geeksforgeeks.org/optimal-binary-search-tree-dp-24/' },
+      { title: 'Largest Submatrix with Sum 0', d: 'hard', gfg: 'https://www.geeksforgeeks.org/largest-rectangular-sub-matrix-whose-sum-0/' },
+      { title: 'Largest Submatrix with Equal 1s and 0s', d: 'hard', gfg: 'https://www.geeksforgeeks.org/largest-area-rectangular-sub-matrix-equal-number-1s-0s/' },
+    ]
+  },
+  {
+    id: 'bitmask', name: 'Bit Manipulation', icon: '⊕', color: '#22d3ee',
+    problems: [
+      { title: 'Count Set Bits in an Integer', d: 'easy', lc: 'https://leetcode.com/problems/number-of-1-bits/' },
+      { title: 'Find Two Non-Repeating Elements', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-two-non-repeating-elements-in-an-array-of-repeating-elements/' },
+      { title: 'Check if Number is Power of Two', d: 'easy', lc: 'https://leetcode.com/problems/power-of-two/' },
+      { title: 'Find Position of Only Set Bit', d: 'easy', gfg: 'https://www.geeksforgeeks.org/find-position-of-the-only-set-bit/' },
+      { title: 'Count Bits to Flip to Convert A to B', d: 'easy', gfg: 'https://www.geeksforgeeks.org/count-number-of-bits-to-be-flipped-to-convert-a-to-b/' },
+      { title: 'Count Total Set Bits from 1 to N', d: 'medium', gfg: 'https://www.geeksforgeeks.org/count-total-set-bits-in-all-numbers-from-1-to-n/' },
+      { title: 'Copy Set Bits in a Range', d: 'medium', gfg: 'https://www.geeksforgeeks.org/copy-set-bits-in-a-range/' },
+      { title: 'Calculate Square without *, / and pow()', d: 'easy', gfg: 'https://www.geeksforgeeks.org/calculate-square-of-a-number-without-using-and-pow/' },
+      { title: 'Divide Two Integers without *, / and mod', d: 'medium', lc: 'https://leetcode.com/problems/divide-two-integers/' },
+      { title: 'Power Set', d: 'medium', lc: 'https://leetcode.com/problems/subsets/' },
+    ]
+  },
+  {
+    id: 'segtrees', name: 'Segment Trees', icon: '⟁', color: '#a3e635',
+    problems: [
+      { title: 'Range Sum Query - Immutable', d: 'easy', lc: 'https://leetcode.com/problems/range-sum-query-immutable/' },
+      { title: 'Range Minimum Query', d: 'medium', gfg: 'https://www.geeksforgeeks.org/segment-tree-set-1-range-minimum-query/' },
+      { title: 'Range Sum Query - Mutable', d: 'medium', lc: 'https://leetcode.com/problems/range-sum-query-mutable/' },
+      { title: 'Create Sorted Array through Instructions', d: 'hard', lc: 'https://leetcode.com/problems/create-sorted-array-through-instructions/' },
+      { title: 'Count of Range Sum', d: 'hard', lc: 'https://leetcode.com/problems/count-of-range-sum/' },
+      { title: 'Count of Smaller Numbers After Self', d: 'hard', lc: 'https://leetcode.com/problems/count-of-smaller-numbers-after-self/' },
+    ]
+  },
+];
+
+// ======================== STATE ========================
 let checkedState = {};
+let dsaState = {};
 let currentSection = 'all';
 let searchQuery = '';
+let dsaSearchQuery = '';
 
 function loadState() {
   try { checkedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { checkedState = {}; }
+  try { dsaState = JSON.parse(localStorage.getItem(DSA_STORAGE_KEY)) || {}; } catch { dsaState = {}; }
 }
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState));
-}
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState)); }
+function saveDsaState() { localStorage.setItem(DSA_STORAGE_KEY, JSON.stringify(dsaState)); }
 
-function getTopicKey(section, topicIdx) {
-  return `${section}_${topicIdx}`;
-}
+function getTopicKey(section, topicIdx) { return `${section}_${topicIdx}`; }
 
+function getDsaKey(chapterId, probIdx) { return `${chapterId}_${probIdx}`; }
+
+// ======================== PROGRESS ========================
 function countForSection(section) {
   const sec = data.find(d => d.section === section);
   if (!sec) return { total: 0, done: 0 };
   let total = sec.topics.length, done = 0;
   sec.topics.forEach((_, i) => { if (checkedState[getTopicKey(section, i)]) done++; });
+  return { total, done };
+}
+
+function countDsa() {
+  let total = 0, done = 0;
+  dsaChapters.forEach(ch => {
+    ch.problems.forEach((_, i) => {
+      total++;
+      if (dsaState[getDsaKey(ch.id, i)]) done++;
+    });
+  });
   return { total, done };
 }
 
@@ -748,6 +1045,11 @@ function updateProgress() {
       if (checkedState[getTopicKey(sec.section, i)]) done++;
     });
   });
+
+  const dsa = countDsa();
+  total += dsa.total;
+  done += dsa.done;
+
   const pct = total ? Math.round(done / total * 100) : 0;
   document.getElementById('progressBar').style.width = pct + '%';
   document.getElementById('doneCount').textContent = done;
@@ -761,15 +1063,16 @@ function updateProgress() {
     if (el) el.textContent = `${d}/${t}`;
   });
 
-  // Motivational
+  // DSA count
+  document.getElementById('cnt-dsa').textContent = `${dsa.done}/${dsa.total}`;
+  document.getElementById('dsaDone').textContent = dsa.done;
+  document.getElementById('dsaTotal').textContent = dsa.total;
+  const dsaPct = dsa.total ? Math.round(dsa.done / dsa.total * 100) : 0;
+  document.getElementById('dsaBar').style.width = dsaPct + '%';
+  document.getElementById('dsaPct').textContent = dsaPct + '%';
+
   const banner = document.getElementById('motiBanner');
-  const quotes = [
-    "Good start — keep the momentum going.",
-    "25% done. Solid progress, keep pushing.",
-    "Halfway there. Stay consistent.",
-    "75% done. The finish line is close.",
-    "100% complete. Every topic covered."
-  ];
+  const quotes = ["Good start — keep the momentum going.","25% done. Solid progress, keep pushing.","Halfway there. Stay consistent.","75% done. The finish line is close.","100% complete. Every topic covered."];
   if (pct === 0) { banner.classList.remove('show'); }
   else if (pct < 25) { banner.textContent = quotes[0]; banner.classList.add('show'); }
   else if (pct < 50) { banner.textContent = quotes[1]; banner.classList.add('show'); }
@@ -791,46 +1094,39 @@ function spawnStar(x, y) {
   setTimeout(() => el.remove(), 1000);
 }
 
+// ======================== NON-DSA RENDER ========================
 function renderTopics() {
   const list = document.getElementById('topicsList');
   list.innerHTML = '';
+  const sectionColors = { prob: '#a855f7', stats: '#06b6d4', sql: '#f59e0b', python: '#10b981', ml: '#f43f5e' };
 
   data.forEach(sec => {
     if (currentSection !== 'all' && currentSection !== sec.section) return;
-
     const header = document.createElement('div');
     header.className = `section-header ${sec.section}`;
-    header.innerHTML = `<span class="dot"></span>${sectionEmojis[sec.section]} ${sec.label}`;
+    header.innerHTML = `<span class="dot"></span>${sec.label}`;
     header.style.color = sectionColors[sec.section];
-
     let headerAdded = false;
 
     sec.topics.forEach((topic, i) => {
       const key = getTopicKey(sec.section, i);
       const fullText = (topic.title + ' ' + (topic.subs || []).join(' ')).toLowerCase();
       if (searchQuery && !fullText.includes(searchQuery.toLowerCase())) return;
-
       if (!headerAdded) { list.appendChild(header); headerAdded = true; }
 
       const card = document.createElement('div');
       card.className = `topic-card ${sec.section}${checkedState[key] ? ' done' : ''}`;
-      card.dataset.key = key;
-
       const subsHtml = topic.subs && topic.subs.length
         ? `<div class="subtopics"><ul>${topic.subs.map(s => `<li>${s}</li>`).join('')}</ul></div>` : '';
-
       card.innerHTML = `
         <div class="check-box"><span class="check-icon">✓</span></div>
         <div class="topic-content">
-          <div class="topic-title">${topic.title}</div>
-          ${subsHtml}
+          <div class="topic-title">${topic.title}</div>${subsHtml}
         </div>
         ${topic.subs && topic.subs.length ? '<button class="expand-btn" title="Show subtopics">▾</button>' : ''}
       `;
-
       const checkBox = card.querySelector('.check-box');
       const expandBtn = card.querySelector('.expand-btn');
-
       checkBox.addEventListener('click', (e) => {
         e.stopPropagation();
         checkedState[key] = !checkedState[key];
@@ -839,32 +1135,125 @@ function renderTopics() {
         if (checkedState[key]) spawnStar(e.clientX, e.clientY);
         updateProgress();
       });
-
       if (expandBtn) {
-        expandBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          card.classList.toggle('expanded');
-        });
-        card.querySelector('.topic-content').addEventListener('click', () => {
-          card.classList.toggle('expanded');
-        });
+        expandBtn.addEventListener('click', (e) => { e.stopPropagation(); card.classList.toggle('expanded'); });
+        card.querySelector('.topic-content').addEventListener('click', () => card.classList.toggle('expanded'));
       }
-
       list.appendChild(card);
     });
   });
 }
 
-function resetAll() {
-  if (confirm('Reset all progress? This cannot be undone.')) {
-    checkedState = {};
-    saveState();
-    renderTopics();
-    updateProgress();
-  }
+// ======================== DSA RENDER ========================
+function diffClass(d) {
+  if (d === 'easy') return 'diff-easy';
+  if (d === 'hard') return 'diff-hard';
+  return 'diff-medium';
 }
 
-// Tabs
+function getLinkHtml(prob) {
+  let links = '';
+  if (prob.lc) links += `<a class="prob-link lc" href="${prob.lc}" target="_blank" rel="noopener">LC ↗</a>`;
+  if (prob.gfg) links += `<a class="prob-link gfg" href="${prob.gfg}" target="_blank" rel="noopener">GFG ↗</a>`;
+  return links;
+}
+
+function getChapterDoneCount(ch) {
+  let done = 0;
+  ch.problems.forEach((_, i) => { if (dsaState[getDsaKey(ch.id, i)]) done++; });
+  return done;
+}
+
+function renderDsa() {
+  const container = document.getElementById('dsaChapters');
+  const noResults = document.getElementById('dsaNoResults');
+  container.innerHTML = '';
+  let anyVisible = false;
+
+  dsaChapters.forEach(ch => {
+    const filtered = dsaSearchQuery
+      ? ch.problems.filter(p => p.title.toLowerCase().includes(dsaSearchQuery.toLowerCase()))
+      : ch.problems;
+
+    if (dsaSearchQuery && filtered.length === 0) return;
+    anyVisible = true;
+
+    const done = getChapterDoneCount(ch);
+    const total = ch.problems.length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+
+    const chEl = document.createElement('div');
+    chEl.className = 'dsa-chapter';
+    chEl.dataset.id = ch.id;
+
+    const badgeBg = done === total && total > 0
+      ? 'rgba(16,185,129,0.15)' : 'rgba(99,102,241,0.12)';
+    const badgeColor = done === total && total > 0 ? '#10b981' : ch.color;
+
+    chEl.innerHTML = `
+      <div class="chapter-mini-bar" style="background:linear-gradient(90deg,${ch.color},transparent);opacity:0.5;"></div>
+      <div class="dsa-chapter-header">
+        <div class="chapter-icon" style="background:${ch.color}22;color:${ch.color};">${ch.icon}</div>
+        <div class="chapter-info">
+          <div class="chapter-name">${ch.name}</div>
+          <div class="chapter-sub">${total} problems</div>
+        </div>
+        <div class="chapter-meta">
+          <span class="chapter-done-badge" style="background:${badgeBg};color:${badgeColor};border:1px solid ${badgeColor}33;">
+            ${done}/${total}
+          </span>
+          <span class="chapter-chevron">▾</span>
+        </div>
+      </div>
+      <div class="dsa-problems" id="probs-${ch.id}"></div>
+    `;
+
+    const header = chEl.querySelector('.dsa-chapter-header');
+    header.addEventListener('click', () => chEl.classList.toggle('open'));
+
+    const probsContainer = chEl.querySelector(`#probs-${ch.id}`);
+
+    const problemsToShow = dsaSearchQuery ? filtered : ch.problems;
+    problemsToShow.forEach((prob, rawIdx) => {
+      const i = dsaSearchQuery ? ch.problems.indexOf(prob) : rawIdx;
+      const key = getDsaKey(ch.id, i);
+      const row = document.createElement('div');
+      row.className = `dsa-problem-row${dsaState[key] ? ' pdone' : ''}`;
+      row.innerHTML = `
+        <div class="prob-check" title="Mark as done"><span class="prob-check-icon">✓</span></div>
+        <span class="prob-name">${prob.title}</span>
+        <span class="prob-difficulty ${diffClass(prob.d)}">${prob.d}</span>
+        ${getLinkHtml(prob)}
+      `;
+      const check = row.querySelector('.prob-check');
+      check.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dsaState[key] = !dsaState[key];
+        saveDsaState();
+        row.classList.toggle('pdone', !!dsaState[key]);
+        if (dsaState[key]) spawnStar(e.clientX, e.clientY);
+        // Update chapter badge
+        const newDone = getChapterDoneCount(ch);
+        const badge = chEl.querySelector('.chapter-done-badge');
+        badge.textContent = `${newDone}/${total}`;
+        const newBadgeBg = newDone === total ? 'rgba(16,185,129,0.15)' : 'rgba(99,102,241,0.12)';
+        const newBadgeColor = newDone === total ? '#10b981' : ch.color;
+        badge.style.background = newBadgeBg;
+        badge.style.color = newBadgeColor;
+        badge.style.borderColor = newBadgeColor + '33';
+        updateProgress();
+      });
+      probsContainer.appendChild(row);
+    });
+
+    if (dsaSearchQuery) chEl.classList.add('open');
+    container.appendChild(chEl);
+  });
+
+  noResults.classList.toggle('hidden', anyVisible);
+}
+
+// ======================== TABS ========================
 document.getElementById('tabs').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn');
   if (!btn) return;
@@ -874,31 +1263,50 @@ document.getElementById('tabs').addEventListener('click', (e) => {
 
   const dsaSection = document.getElementById('dsaSection');
   const topicsList = document.getElementById('topicsList');
-  const searchWrap = document.querySelector('.search-wrap');
+  const mainSearchWrap = document.getElementById('mainSearchWrap');
   const motiBanner = document.getElementById('motiBanner');
 
   if (currentSection === 'dsa') {
     dsaSection.classList.add('visible');
     topicsList.style.display = 'none';
-    searchWrap.style.display = 'none';
+    mainSearchWrap.style.display = 'none';
     motiBanner.style.display = 'none';
+    renderDsa();
   } else {
     dsaSection.classList.remove('visible');
     topicsList.style.display = '';
-    searchWrap.style.display = '';
+    mainSearchWrap.style.display = '';
     motiBanner.style.display = '';
     renderTopics();
   }
 });
 
-// Search
+// Search (non-DSA)
 document.getElementById('searchInput').addEventListener('input', (e) => {
   searchQuery = e.target.value.trim();
   renderTopics();
 });
 
+// DSA search
+document.getElementById('dsaSearchInput').addEventListener('input', (e) => {
+  dsaSearchQuery = e.target.value.trim();
+  renderDsa();
+});
+
+// Reset
+function resetAll() {
+  if (confirm('Reset all progress? This cannot be undone.')) {
+    checkedState = {}; dsaState = {};
+    saveState(); saveDsaState();
+    renderTopics(); renderDsa();
+    updateProgress();
+  }
+}
+
+// ======================== INIT ========================
 loadState();
 renderTopics();
+renderDsa();
 updateProgress();
 </script>
 </body>
