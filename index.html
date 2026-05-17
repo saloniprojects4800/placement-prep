@@ -158,6 +158,7 @@
   .tab-btn.active[data-section="python"] { background: linear-gradient(135deg, #10b981, #059669); }
   .tab-btn.active[data-section="ml"] { background: linear-gradient(135deg, #f43f5e, #ec4899); }
   .tab-btn.active[data-section="dsa"] { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+  .tab-btn.active[data-section="sqlprobs"] { background: linear-gradient(135deg, #f59e0b, #f97316); }
 
   .tab-count {
     background: rgba(255,255,255,0.15);
@@ -412,6 +413,8 @@
   .prob-link.lc:hover { background: rgba(245,158,11,0.1); border-color: #f59e0b; color: #fbbf24; }
   .prob-link.gfg { border-color: rgba(16,185,129,0.25); color: #10b981; }
   .prob-link.gfg:hover { background: rgba(16,185,129,0.1); border-color: #10b981; color: #34d399; }
+  .prob-link.dl { border-color: rgba(245,158,11,0.25); color: #f59e0b; }
+  .prob-link.dl:hover { background: rgba(245,158,11,0.1); border-color: #f59e0b; color: #fbbf24; }
 
   /* Motivational banner */
   .moti-banner {
@@ -493,10 +496,35 @@
     <button class="tab-btn" data-section="sql">SQL <span class="tab-count" id="cnt-sql">0</span></button>
     <button class="tab-btn" data-section="python">Python <span class="tab-count" id="cnt-python">0</span></button>
     <button class="tab-btn" data-section="ml">ML <span class="tab-count" id="cnt-ml">0</span></button>
+    <button class="tab-btn" data-section="sqlprobs">SQL Problems <span class="tab-count" id="cnt-sqlprobs">0</span></button>
     <button class="tab-btn" data-section="dsa">DSA Problems <span class="tab-count" id="cnt-dsa">0</span></button>
   </div>
 
   <div class="topics-list" id="topicsList"></div>
+
+  <!-- ===================== SQL PROBLEMS SECTION ===================== -->
+  <div class="dsa-section" id="sqlProbsSection">
+    <div class="dsa-header">
+      <h2>SQL Problems</h2>
+      <p>All the Best Saloni! 🌟</p>
+    </div>
+
+    <div class="dsa-progress-wrap">
+      <div class="dsa-progress-label">
+        <span id="sqlpDone">0</span><span style="color:var(--muted);font-family:'DM Sans';font-weight:400"> / <span id="sqlpTotal">0</span> solved</span>
+        <span id="sqlpPct">0%</span>
+      </div>
+      <div class="dsa-bar-outer"><div class="dsa-bar-inner" id="sqlpBar" style="width:0%;background:linear-gradient(90deg,#f59e0b,#f97316);"></div></div>
+    </div>
+
+    <div class="dsa-search-wrap">
+      <span class="dsa-search-icon">⌕</span>
+      <input class="dsa-search-input" id="sqlpSearchInput" type="text" placeholder="Search problems..." />
+    </div>
+
+    <div id="sqlpChapters" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;"></div>
+    <div id="sqlpNoResults" class="no-results hidden">No problems match your search.</div>
+  </div>
 
   <!-- ===================== DSA SECTION ===================== -->
   <div class="dsa-section" id="dsaSection">
@@ -530,6 +558,7 @@
 <script>
 const STORAGE_KEY = 'saloni_placement_checklist_v1';
 const DSA_STORAGE_KEY = 'saloni_dsa_checklist_v1';
+const SQL_Q_STORAGE_KEY = 'saloni_sql_questions_v1';
 
 // ======================== NON-DSA DATA ========================
 const data = [
@@ -998,9 +1027,74 @@ const dsaChapters = [
   },
 ];
 
+// ======================== SQL DATALEMUR QUESTIONS ========================
+const sqlQuestions = [
+  { id: 'easy', label: '🟢 Easy', color: '#10b981', icon: '🟢', questions: [
+    { title: 'Histogram of Tweets', url: 'https://datalemur.com/questions/sql-histogram-tweets' },
+    { title: 'Data Science Skills', url: 'https://datalemur.com/questions/matching-skills' },
+    { title: 'Page With No Likes', url: 'https://datalemur.com/questions/sql-page-with-no-likes' },
+    { title: 'Unfinished Parts', url: 'https://datalemur.com/questions/tesla-unfinished-parts' },
+    { title: 'Laptop vs. Mobile Viewership', url: 'https://datalemur.com/questions/laptop-mobile-viewership' },
+    { title: 'Average Post Hiatus (Part 1)', url: 'https://datalemur.com/questions/sql-average-post-hiatus-1' },
+    { title: 'Teams Power Users', url: 'https://datalemur.com/questions/teams-power-users' },
+    { title: 'Duplicate Job Listings', url: 'https://datalemur.com/questions/duplicate-job-listings' },
+    { title: 'Cities With Completed Trades', url: 'https://datalemur.com/questions/completed-trades' },
+    { title: 'Average Review Ratings', url: 'https://datalemur.com/questions/sql-avg-review-ratings' },
+    { title: 'Well Paid Employees', url: 'https://datalemur.com/questions/sql-well-paid-employees' },
+    { title: 'Final Account Balance', url: 'https://datalemur.com/questions/final-account-balance' },
+    { title: 'App Click-through Rate (CTR)', url: 'https://datalemur.com/questions/click-through-rate' },
+    { title: 'Second Day Confirmation', url: 'https://datalemur.com/questions/second-day-confirmation' },
+    { title: 'IBM db2 Product Analytics', url: 'https://datalemur.com/questions/sql-ibm-db2-product-analytics' },
+    { title: 'Cards Issued Difference', url: 'https://datalemur.com/questions/cards-issued-difference' },
+    { title: 'Compressed Mean', url: 'https://datalemur.com/questions/alibaba-compressed-mean' },
+    { title: 'Pharmacy Analytics (Part 1)', url: 'https://datalemur.com/questions/top-profitable-drugs' },
+    { title: 'Pharmacy Analytics (Part 2)', url: 'https://datalemur.com/questions/non-profitable-drugs' },
+    { title: 'Pharmacy Analytics (Part 3)', url: 'https://datalemur.com/questions/total-drugs-sales' },
+    { title: 'Patient Support Analysis (Part 1)', url: 'https://datalemur.com/questions/frequent-callers' },
+  ]},
+  { id: 'medium', label: '🟡 Medium', color: '#f59e0b', icon: '🟡', questions: [
+    { title: "User's Third Transaction", url: 'https://datalemur.com/questions/sql-third-transaction' },
+    { title: 'Second Highest Salary', url: 'https://datalemur.com/questions/sql-second-highest-salary' },
+    { title: 'Sending vs. Opening Snaps', url: 'https://datalemur.com/questions/time-spent-snaps' },
+    { title: "Tweets' Rolling Averages", url: 'https://datalemur.com/questions/rolling-average-tweets' },
+    { title: 'Highest-Grossing Items', url: 'https://datalemur.com/questions/sql-highest-grossing' },
+    { title: 'Top Three Salaries', url: 'https://datalemur.com/questions/sql-top-three-salaries' },
+    { title: 'Signup Activation Rate', url: 'https://datalemur.com/questions/signup-confirmation-rate' },
+    { title: 'Spotify Streaming History', url: 'https://datalemur.com/questions/spotify-streaming-history' },
+    { title: 'Supercloud Customer', url: 'https://datalemur.com/questions/supercloud-customer' },
+    { title: 'Odd and Even Measurements', url: 'https://datalemur.com/questions/odd-even-measurements' },
+    { title: 'Swapped Food Delivery', url: 'https://datalemur.com/questions/sql-swapped-food-delivery' },
+    { title: 'FAANG Stock Min-Max (Part 1)', url: 'https://datalemur.com/questions/sql-bloomberg-stock-min-max-1' },
+    { title: 'Best-Selling Product', url: 'https://datalemur.com/questions/best-selling-products' },
+    { title: 'User Shopping Sprees', url: 'https://datalemur.com/questions/amazon-shopping-spree' },
+    { title: 'Histogram of Users and Purchases', url: 'https://datalemur.com/questions/histogram-users-purchases' },
+    { title: 'Compressed Mode', url: 'https://datalemur.com/questions/alibaba-compressed-mode' },
+    { title: 'Card Launch Success', url: 'https://datalemur.com/questions/card-launch-success' },
+    { title: 'International Call Percentage', url: 'https://datalemur.com/questions/international-call-percentage' },
+    { title: 'Patient Support Analysis (Part 2)', url: 'https://datalemur.com/questions/uncategorized-calls-percentage' },
+  ]},
+  { id: 'hard', label: '🔴 Hard', color: '#f43f5e', icon: '🔴', questions: [
+    { title: 'Active User Retention', url: 'https://datalemur.com/questions/user-retention' },
+    { title: 'Y-on-Y Growth Rate', url: 'https://datalemur.com/questions/yoy-growth-rate' },
+    { title: 'Maximize Prime Item Inventory', url: 'https://datalemur.com/questions/prime-warehouse-storage' },
+    { title: 'Median Google Search Frequency', url: 'https://datalemur.com/questions/median-search-freq' },
+    { title: 'Advertiser Status', url: 'https://datalemur.com/questions/updated-status' },
+    { title: 'Consecutive Filing Years', url: 'https://datalemur.com/questions/consecutive-filing-years' },
+    { title: 'Marketing Touch Streak', url: 'https://datalemur.com/questions/marketing-touch-streak' },
+    { title: '3-Topping Pizzas', url: 'https://datalemur.com/questions/pizzas-topping-cost' },
+    { title: 'Patient Support Analysis (Part 3)', url: 'https://datalemur.com/questions/patient-call-history' },
+    { title: 'Patient Support Analysis (Part 4)', url: 'https://datalemur.com/questions/long-calls-growth' },
+    { title: 'Repeated Payments', url: 'https://datalemur.com/questions/repeated-payments' },
+    { title: 'Reactivated Users', url: 'https://datalemur.com/questions/reactivated-users' },
+    { title: 'Senior Managers', url: 'https://datalemur.com/questions/senior-managers-reportees' },
+    { title: 'Server Utilization Time', url: 'https://datalemur.com/questions/total-utilization-time' },
+  ]},
+];
+
 // ======================== STATE ========================
 let checkedState = {};
 let dsaState = {};
+let sqlQState = {};
 let currentSection = 'all';
 let searchQuery = '';
 let dsaSearchQuery = '';
@@ -1008,14 +1102,16 @@ let dsaSearchQuery = '';
 function loadState() {
   try { checkedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { checkedState = {}; }
   try { dsaState = JSON.parse(localStorage.getItem(DSA_STORAGE_KEY)) || {}; } catch { dsaState = {}; }
+  try { sqlQState = JSON.parse(localStorage.getItem(SQL_Q_STORAGE_KEY)) || {}; } catch { sqlQState = {}; }
 }
 
 function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState)); }
 function saveDsaState() { localStorage.setItem(DSA_STORAGE_KEY, JSON.stringify(dsaState)); }
+function saveSqlQState() { localStorage.setItem(SQL_Q_STORAGE_KEY, JSON.stringify(sqlQState)); }
 
 function getTopicKey(section, topicIdx) { return `${section}_${topicIdx}`; }
-
 function getDsaKey(chapterId, probIdx) { return `${chapterId}_${probIdx}`; }
+function getSqlQKey(diffId, qIdx) { return `sqlq_${diffId}_${qIdx}`; }
 
 // ======================== PROGRESS ========================
 function countForSection(section) {
@@ -1037,6 +1133,17 @@ function countDsa() {
   return { total, done };
 }
 
+function countSqlQ() {
+  let total = 0, done = 0;
+  sqlQuestions.forEach(diff => {
+    diff.questions.forEach((_, i) => {
+      total++;
+      if (sqlQState[getSqlQKey(diff.id, i)]) done++;
+    });
+  });
+  return { total, done };
+}
+
 function updateProgress() {
   let total = 0, done = 0;
   data.forEach(sec => {
@@ -1050,6 +1157,10 @@ function updateProgress() {
   total += dsa.total;
   done += dsa.done;
 
+  const sqlq = countSqlQ();
+  total += sqlq.total;
+  done += sqlq.done;
+
   const pct = total ? Math.round(done / total * 100) : 0;
   document.getElementById('progressBar').style.width = pct + '%';
   document.getElementById('doneCount').textContent = done;
@@ -1062,6 +1173,9 @@ function updateProgress() {
     const el = document.getElementById(`cnt-${sec.section}`);
     if (el) el.textContent = `${d}/${t}`;
   });
+
+  // SQL Problems tab count
+  document.getElementById('cnt-sqlprobs').textContent = `${sqlq.done}/${sqlq.total}`;
 
   // DSA count
   document.getElementById('cnt-dsa').textContent = `${dsa.done}/${dsa.total}`;
@@ -1144,7 +1258,6 @@ function renderTopics() {
   });
 }
 
-// ======================== DSA RENDER ========================
 function diffClass(d) {
   if (d === 'easy') return 'diff-easy';
   if (d === 'hard') return 'diff-hard';
@@ -1162,6 +1275,106 @@ function getChapterDoneCount(ch) {
   let done = 0;
   ch.problems.forEach((_, i) => { if (dsaState[getDsaKey(ch.id, i)]) done++; });
   return done;
+}
+
+// ======================== SQL PROBLEMS RENDER ========================
+let sqlpSearchQuery = '';
+
+function getSqlDiffDoneCount(diff) {
+  let done = 0;
+  diff.questions.forEach((_, i) => { if (sqlQState[getSqlQKey(diff.id, i)]) done++; });
+  return done;
+}
+
+function renderSqlProbs() {
+  const container = document.getElementById('sqlpChapters');
+  const noResults = document.getElementById('sqlpNoResults');
+  container.innerHTML = '';
+  let anyVisible = false;
+
+  sqlQuestions.forEach(diff => {
+    const filtered = sqlpSearchQuery
+      ? diff.questions.filter(q => q.title.toLowerCase().includes(sqlpSearchQuery.toLowerCase()))
+      : diff.questions;
+
+    if (sqlpSearchQuery && filtered.length === 0) return;
+    anyVisible = true;
+
+    const done = getSqlDiffDoneCount(diff);
+    const total = diff.questions.length;
+
+    const chEl = document.createElement('div');
+    chEl.className = 'dsa-chapter';
+    chEl.dataset.id = diff.id;
+
+    const badgeBg = done === total && total > 0 ? 'rgba(16,185,129,0.15)' : `${diff.color}22`;
+    const badgeColor = done === total && total > 0 ? '#10b981' : diff.color;
+
+    chEl.innerHTML = `
+      <div class="chapter-mini-bar" style="background:linear-gradient(90deg,${diff.color},transparent);opacity:0.5;"></div>
+      <div class="dsa-chapter-header">
+        <div class="chapter-icon" style="background:${diff.color}22;color:${diff.color};font-size:18px;">${diff.icon}</div>
+        <div class="chapter-info">
+          <div class="chapter-name">${diff.label}</div>
+          <div class="chapter-sub">${total} problems</div>
+        </div>
+        <div class="chapter-meta">
+          <span class="chapter-done-badge" style="background:${badgeBg};color:${badgeColor};border:1px solid ${badgeColor}33;">
+            ${done}/${total}
+          </span>
+          <span class="chapter-chevron">▾</span>
+        </div>
+      </div>
+      <div class="dsa-problems" id="sqlpprobs-${diff.id}"></div>
+    `;
+
+    chEl.querySelector('.dsa-chapter-header').addEventListener('click', () => chEl.classList.toggle('open'));
+    const probsContainer = chEl.querySelector(`#sqlpprobs-${diff.id}`);
+
+    const questionsToShow = sqlpSearchQuery ? filtered : diff.questions;
+    questionsToShow.forEach((q, rawIdx) => {
+      const i = sqlpSearchQuery ? diff.questions.indexOf(q) : rawIdx;
+      const key = getSqlQKey(diff.id, i);
+      const row = document.createElement('div');
+      row.className = `dsa-problem-row${sqlQState[key] ? ' pdone' : ''}`;
+      row.innerHTML = `
+        <div class="prob-check" title="Mark as done"><span class="prob-check-icon">✓</span></div>
+        <span class="prob-name">${q.title}</span>
+        <a class="prob-link dl" href="${q.url}" target="_blank" rel="noopener">Solve ↗</a>
+      `;
+      const check = row.querySelector('.prob-check');
+      check.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sqlQState[key] = !sqlQState[key];
+        saveSqlQState();
+        row.classList.toggle('pdone', !!sqlQState[key]);
+        if (sqlQState[key]) spawnStar(e.clientX, e.clientY);
+        const newDone = getSqlDiffDoneCount(diff);
+        const badge = chEl.querySelector('.chapter-done-badge');
+        badge.textContent = `${newDone}/${total}`;
+        const newBadgeBg = newDone === total ? 'rgba(16,185,129,0.15)' : `${diff.color}22`;
+        const newBadgeColor = newDone === total ? '#10b981' : diff.color;
+        badge.style.background = newBadgeBg;
+        badge.style.color = newBadgeColor;
+        badge.style.borderColor = newBadgeColor + '33';
+        updateProgress();
+      });
+      probsContainer.appendChild(row);
+    });
+
+    if (sqlpSearchQuery) chEl.classList.add('open');
+    container.appendChild(chEl);
+  });
+
+  noResults.classList.toggle('hidden', anyVisible);
+
+  // Update progress bar inside section
+  const sqlq = countSqlQ();
+  document.getElementById('sqlpDone').textContent = sqlq.done;
+  document.getElementById('sqlpTotal').textContent = sqlq.total;
+  const pct = sqlq.total ? Math.round(sqlq.done / sqlq.total * 100) : 0;
+  document.getElementById('sqlpBar').style.width = pct + '%';
+  document.getElementById('sqlpPct').textContent = pct + '%';
 }
 
 function renderDsa() {
@@ -1262,18 +1475,28 @@ document.getElementById('tabs').addEventListener('click', (e) => {
   currentSection = btn.dataset.section;
 
   const dsaSection = document.getElementById('dsaSection');
+  const sqlProbsSection = document.getElementById('sqlProbsSection');
   const topicsList = document.getElementById('topicsList');
   const mainSearchWrap = document.getElementById('mainSearchWrap');
   const motiBanner = document.getElementById('motiBanner');
 
   if (currentSection === 'dsa') {
     dsaSection.classList.add('visible');
+    sqlProbsSection.classList.remove('visible');
     topicsList.style.display = 'none';
     mainSearchWrap.style.display = 'none';
     motiBanner.style.display = 'none';
     renderDsa();
+  } else if (currentSection === 'sqlprobs') {
+    sqlProbsSection.classList.add('visible');
+    dsaSection.classList.remove('visible');
+    topicsList.style.display = 'none';
+    mainSearchWrap.style.display = 'none';
+    motiBanner.style.display = 'none';
+    renderSqlProbs();
   } else {
     dsaSection.classList.remove('visible');
+    sqlProbsSection.classList.remove('visible');
     topicsList.style.display = '';
     mainSearchWrap.style.display = '';
     motiBanner.style.display = '';
@@ -1293,12 +1516,18 @@ document.getElementById('dsaSearchInput').addEventListener('input', (e) => {
   renderDsa();
 });
 
+// SQL Problems search
+document.getElementById('sqlpSearchInput').addEventListener('input', (e) => {
+  sqlpSearchQuery = e.target.value.trim();
+  renderSqlProbs();
+});
+
 // Reset
 function resetAll() {
   if (confirm('Reset all progress? This cannot be undone.')) {
-    checkedState = {}; dsaState = {};
-    saveState(); saveDsaState();
-    renderTopics(); renderDsa();
+    checkedState = {}; dsaState = {}; sqlQState = {};
+    saveState(); saveDsaState(); saveSqlQState();
+    renderTopics(); renderDsa(); renderSqlProbs();
     updateProgress();
   }
 }
@@ -1307,6 +1536,7 @@ function resetAll() {
 loadState();
 renderTopics();
 renderDsa();
+renderSqlProbs();
 updateProgress();
 </script>
 </body>
