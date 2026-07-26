@@ -158,6 +158,7 @@
   .tab-btn.active[data-section="python"] { background: linear-gradient(135deg, #10b981, #059669); }
   .tab-btn.active[data-section="ml"] { background: linear-gradient(135deg, #f43f5e, #ec4899); }
   .tab-btn.active[data-section="dsa"] { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+  .tab-btn.active[data-section="company"] { background: linear-gradient(135deg, #06b6d4, #22d3ee); }
   .tab-btn.active[data-section="sqlprobs"] { background: linear-gradient(135deg, #f59e0b, #f97316); }
 
   .tab-count {
@@ -415,6 +416,8 @@
   .prob-link.gfg:hover { background: rgba(16,185,129,0.1); border-color: #10b981; color: #34d399; }
   .prob-link.dl { border-color: rgba(245,158,11,0.25); color: #f59e0b; }
   .prob-link.dl:hover { background: rgba(245,158,11,0.1); border-color: #f59e0b; color: #fbbf24; }
+  .prob-link.nd { border-color: rgba(6,182,212,0.25); color: #06b6d4; }
+  .prob-link.nd:hover { background: rgba(6,182,212,0.1); border-color: #06b6d4; color: #22d3ee; }
 
   /* Motivational banner */
   .moti-banner {
@@ -466,6 +469,39 @@
 
   /* No results */
   .no-results { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem; }
+
+  .company-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .company-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .company-card:hover {
+    border-color: #06b6d4;
+    background: rgba(6,182,212,0.06);
+    transform: translateY(-2px);
+    color: #22d3ee;
+  }
+  .company-card .company-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: linear-gradient(135deg,#7c3aed,#06b6d4);
+    flex-shrink: 0;
+  }
+  .company-card .company-arrow { margin-left: auto; opacity: 0.5; font-size: 0.8rem; }
 </style>
 </head>
 <body>
@@ -498,6 +534,7 @@
     <button class="tab-btn" data-section="ml">ML <span class="tab-count" id="cnt-ml">0</span></button>
     <button class="tab-btn" data-section="sqlprobs">SQL Problems <span class="tab-count" id="cnt-sqlprobs">0</span></button>
     <button class="tab-btn" data-section="dsa">DSA Problems <span class="tab-count" id="cnt-dsa">0</span></button>
+    <button class="tab-btn" data-section="company">Companywise <span class="tab-count" id="cnt-company">0</span></button>
   </div>
 
   <div class="topics-list" id="topicsList"></div>
@@ -548,6 +585,22 @@
 
     <div id="dsaChapters" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;"></div>
     <div id="dsaNoResults" class="no-results hidden">No problems match your search.</div>
+  </div>
+
+  <!-- ===================== COMPANYWISE SECTION ===================== -->
+  <div class="dsa-section" id="companySection">
+    <div class="dsa-header">
+      <h2>DSA Questions — Companywise</h2>
+      <p>Top interview questions asked at each company 🏢</p>
+    </div>
+
+    <div class="dsa-search-wrap">
+      <span class="dsa-search-icon">⌕</span>
+      <input class="dsa-search-input" id="companySearchInput" type="text" placeholder="Search companies..." />
+    </div>
+
+    <div id="companyGrid" class="company-grid"></div>
+    <div id="companyNoResults" class="no-results hidden">No companies match your search.</div>
   </div>
 
   <div class="reset-area">
@@ -653,6 +706,21 @@ const sectionColors = { prob: '#a855f7', stats: '#06b6d4', sql: '#f59e0b', pytho
 // lc = LeetCode, gfg = GeeksForGeeks
 const dsaChapters = [
   {
+    id: 'foundation', name: 'Foundation', icon: '◆', color: '#38bdf8',
+    problems: [
+      { title: 'Sum', d: 'easy', nd: 'https://namastedev.com/practice/sum' },
+      { title: 'Second Largest', d: 'easy', lc: 'https://leetcode.com/problems/second-largest-digit-in-a-string/' },
+      { title: 'Palindrome Number', d: 'easy', lc: 'https://leetcode.com/problems/palindrome-number/' },
+      { title: 'Reverse Integer', d: 'medium', lc: 'https://leetcode.com/problems/reverse-integer/' },
+      { title: 'Count Negative Numbers in an Array', d: 'easy', nd: 'https://namastedev.com/practice/count-negative' },
+      { title: 'Find Smallest Number in an Array', d: 'easy', nd: 'https://namastedev.com/practice/find-smallest-number' },
+      { title: 'Find Largest Number in an Array', d: 'medium', nd: 'https://namastedev.com/practice/find-largest-number' },
+      { title: 'Binary Search', d: 'easy', lc: 'https://leetcode.com/problems/binary-search/' },
+      { title: 'Merge Sort', d: 'medium', lc: 'https://leetcode.com/problems/sort-an-array/' },
+      { title: 'Power of Two', d: 'easy', lc: 'https://leetcode.com/problems/power-of-two/' },
+    ]
+  },
+  {
     id: 'arrays', name: 'Arrays', icon: '▦', color: '#6366f1',
     problems: [
       { title: 'Maximum and Minimum Element in an Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/maximum-and-minimum-in-an-array/' },
@@ -680,6 +748,19 @@ const dsaChapters = [
     ]
   },
   {
+    id: 'arrays2', name: 'Arrays — Part 2', icon: '▦', color: '#818cf8',
+    problems: [
+      { title: 'Remove Duplicates from Sorted Array', d: 'easy', lc: 'https://leetcode.com/problems/remove-duplicates-from-sorted-array/' },
+      { title: 'Remove Element', d: 'easy', lc: 'https://leetcode.com/problems/remove-element/' },
+      { title: 'Reverse String', d: 'easy', lc: 'https://leetcode.com/problems/reverse-string/' },
+      { title: 'Merge Sorted Arrays', d: 'easy', lc: 'https://leetcode.com/problems/merge-sorted-array/' },
+      { title: 'Move Zeroes', d: 'easy', lc: 'https://leetcode.com/problems/move-zeroes/' },
+      { title: 'Max Consecutive Ones', d: 'easy', lc: 'https://leetcode.com/problems/max-consecutive-ones/' },
+      { title: 'Missing Number', d: 'easy', lc: 'https://leetcode.com/problems/missing-number/' },
+      { title: 'Single Number', d: 'easy', lc: 'https://leetcode.com/problems/single-number/' },
+    ]
+  },
+  {
     id: 'strings', name: 'Strings', icon: '≈', color: '#f59e0b',
     problems: [
       { title: 'Valid Palindrome', d: 'easy', lc: 'https://leetcode.com/problems/valid-palindrome/' },
@@ -700,6 +781,26 @@ const dsaChapters = [
       { title: 'Longest Prefix Suffix (KMP)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/' },
       { title: 'Rabin-Karp Algorithm for Pattern Searching', d: 'medium', gfg: 'https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/' },
       { title: 'Transform One String to Another (Min Operations)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/' },
+    ]
+  },
+  {
+    id: 'strings2', name: 'Strings — Part 2', icon: '≈', color: '#fbbf24',
+    problems: [
+      { title: 'Length of Last Word', d: 'easy', lc: 'https://leetcode.com/problems/length-of-last-word/' },
+      { title: 'Find Words Containing Character', d: 'easy', lc: 'https://leetcode.com/problems/find-words-containing-character/' },
+      { title: 'Jewels and Stones', d: 'easy', lc: 'https://leetcode.com/problems/jewels-and-stones/' },
+      { title: 'Find Most Frequent Vowel and Consonant', d: 'easy', lc: 'https://leetcode.com/problems/find-most-frequent-vowel-and-consonant/' },
+      { title: 'Split a String in Balanced Strings', d: 'easy', lc: 'https://leetcode.com/problems/split-a-string-in-balanced-strings/' },
+      { title: 'Reverse String II', d: 'easy', lc: 'https://leetcode.com/problems/reverse-string-ii/' },
+      { title: 'Largest Odd Number in a String', d: 'easy', lc: 'https://leetcode.com/problems/largest-odd-number-in-string/' },
+      { title: 'Isomorphic Strings', d: 'easy', lc: 'https://leetcode.com/problems/isomorphic-strings/' },
+      { title: 'Minimum Add to Make Parentheses Valid', d: 'medium', lc: 'https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/' },
+      { title: 'Reverse Words in a String', d: 'medium', lc: 'https://leetcode.com/problems/reverse-words-in-a-string/' },
+      { title: 'Sum of Beauty of All Substrings', d: 'medium', lc: 'https://leetcode.com/problems/sum-of-beauty-of-all-substrings/' },
+      { title: 'Decode String', d: 'medium', lc: 'https://leetcode.com/problems/decode-string/' },
+      { title: 'Count and Say', d: 'medium', lc: 'https://leetcode.com/problems/count-and-say/' },
+      { title: 'Reorganize String', d: 'medium', lc: 'https://leetcode.com/problems/reorganize-string/' },
+      { title: 'Repeated String Match', d: 'medium', lc: 'https://leetcode.com/problems/repeated-string-match/' },
     ]
   },
   {
@@ -775,6 +876,20 @@ const dsaChapters = [
     ]
   },
   {
+    id: 'linkedlist2', name: 'Linked List — Part 2', icon: '⛓', color: '#c4b5fd',
+    problems: [
+      { title: 'Design Linked List', d: 'medium', lc: 'https://leetcode.com/problems/design-linked-list/' },
+      { title: 'Middle of the Linked List', d: 'easy', lc: 'https://leetcode.com/problems/middle-of-the-linked-list/' },
+      { title: 'Palindrome Linked List', d: 'easy', lc: 'https://leetcode.com/problems/palindrome-linked-list/' },
+      { title: 'Remove Linked List Elements', d: 'easy', lc: 'https://leetcode.com/problems/remove-linked-list-elements/' },
+      { title: 'Remove Duplicates from Sorted List', d: 'easy', lc: 'https://leetcode.com/problems/remove-duplicates-from-sorted-list/' },
+      { title: 'Odd Even Linked List', d: 'medium', lc: 'https://leetcode.com/problems/odd-even-linked-list/' },
+      { title: 'Add Two Numbers', d: 'medium', lc: 'https://leetcode.com/problems/add-two-numbers/' },
+      { title: 'Rotate List', d: 'medium', lc: 'https://leetcode.com/problems/rotate-list/' },
+      { title: 'Swap Nodes in Pairs', d: 'medium', lc: 'https://leetcode.com/problems/swap-nodes-in-pairs/' },
+    ]
+  },
+  {
     id: 'stacksqueues', name: 'Stacks & Queues', icon: '⊨', color: '#06b6d4',
     problems: [
       { title: 'Implement Two Stacks in an Array', d: 'easy', gfg: 'https://www.geeksforgeeks.org/implement-two-stacks-in-an-array/' },
@@ -798,6 +913,18 @@ const dsaChapters = [
       { title: 'Rotten Oranges', d: 'medium', lc: 'https://leetcode.com/problems/rotting-oranges/' },
       { title: 'Next Smaller Element', d: 'medium', gfg: 'https://www.geeksforgeeks.org/next-smaller-element/' },
       { title: 'Circular Tour (Petrol Problem)', d: 'medium', gfg: 'https://www.geeksforgeeks.org/find-the-first-circular-tour-that-visits-all-petrol-pumps/' },
+    ]
+  },
+  {
+    id: 'stacksqueues2', name: 'Stacks & Queues — Part 2', icon: '⊨', color: '#67e8f9',
+    problems: [
+      { title: 'Implement Queue using Stacks', d: 'easy', lc: 'https://leetcode.com/problems/implement-queue-using-stacks/' },
+      { title: 'Valid Parentheses', d: 'easy', lc: 'https://leetcode.com/problems/valid-parentheses/' },
+      { title: 'Min Stack', d: 'easy', lc: 'https://leetcode.com/problems/min-stack/' },
+      { title: 'Remove Outermost Parentheses', d: 'easy', lc: 'https://leetcode.com/problems/remove-outermost-parentheses/' },
+      { title: 'Evaluate Reverse Polish Notation', d: 'medium', lc: 'https://leetcode.com/problems/evaluate-reverse-polish-notation/' },
+      { title: 'Daily Temperatures', d: 'medium', lc: 'https://leetcode.com/problems/daily-temperatures/' },
+      { title: 'Next Greater Element II', d: 'medium', lc: 'https://leetcode.com/problems/next-greater-element-ii/' },
     ]
   },
   {
@@ -1091,6 +1218,19 @@ const sqlQuestions = [
   ]},
 ];
 
+// ======================== COMPANYWISE DSA QUESTIONS ========================
+const companies = [
+  'Google','Cisco','Microsoft','Meta','Adobe','Codenation','Directi','Amazon','Zoho','Apple',
+  'Barclays','Myntra','Paytm','SAP Labs','Uber','Amdocs','Visa','Zenefits','Yahoo','VMware',
+  'Twitter','Ola','Oracle','PayPal','Morgan Stanley','LinkedIn','Goldman Sachs','Flipkart','Teradata','Synopsys',
+  'Samsung','D. E. Shaw','Delhivery','Dell','eBay','HSBC','Zomato','Intuit','Atlassian','MakeMyTrip',
+  'Juniper Networks','Medlife','Info Edge','Razorpay','BookMyShow'
+].map(name => {
+  const slugOverrides = { 'D. E. Shaw': 'de-shaw', 'Info Edge': 'infoedge' };
+  const slug = slugOverrides[name] || name.toLowerCase().replace(/\./g, '').replace(/\s+/g, '-');
+  return { name, url: `https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-${slug}` };
+});
+
 // ======================== STATE ========================
 let checkedState = {};
 let dsaState = {};
@@ -1268,6 +1408,7 @@ function getLinkHtml(prob) {
   let links = '';
   if (prob.lc) links += `<a class="prob-link lc" href="${prob.lc}" target="_blank" rel="noopener">LC ↗</a>`;
   if (prob.gfg) links += `<a class="prob-link gfg" href="${prob.gfg}" target="_blank" rel="noopener">GFG ↗</a>`;
+  if (prob.nd) links += `<a class="prob-link nd" href="${prob.nd}" target="_blank" rel="noopener">Practice ↗</a>`;
   return links;
 }
 
@@ -1466,6 +1607,32 @@ function renderDsa() {
   noResults.classList.toggle('hidden', anyVisible);
 }
 
+// ======================== COMPANYWISE RENDER ========================
+let companySearchQuery = '';
+
+function renderCompanies() {
+  const grid = document.getElementById('companyGrid');
+  const noResults = document.getElementById('companyNoResults');
+  grid.innerHTML = '';
+
+  const filtered = companySearchQuery
+    ? companies.filter(c => c.name.toLowerCase().includes(companySearchQuery.toLowerCase()))
+    : companies;
+
+  filtered.forEach(c => {
+    const card = document.createElement('a');
+    card.className = 'company-card';
+    card.href = c.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.innerHTML = `<span class="company-dot"></span><span>${c.name}</span><span class="company-arrow">↗</span>`;
+    grid.appendChild(card);
+  });
+
+  noResults.classList.toggle('hidden', filtered.length > 0);
+  document.getElementById('cnt-company').textContent = companies.length;
+}
+
 // ======================== TABS ========================
 document.getElementById('tabs').addEventListener('click', (e) => {
   const btn = e.target.closest('.tab-btn');
@@ -1476,6 +1643,7 @@ document.getElementById('tabs').addEventListener('click', (e) => {
 
   const dsaSection = document.getElementById('dsaSection');
   const sqlProbsSection = document.getElementById('sqlProbsSection');
+  const companySection = document.getElementById('companySection');
   const topicsList = document.getElementById('topicsList');
   const mainSearchWrap = document.getElementById('mainSearchWrap');
   const motiBanner = document.getElementById('motiBanner');
@@ -1483,6 +1651,7 @@ document.getElementById('tabs').addEventListener('click', (e) => {
   if (currentSection === 'dsa') {
     dsaSection.classList.add('visible');
     sqlProbsSection.classList.remove('visible');
+    companySection.classList.remove('visible');
     topicsList.style.display = 'none';
     mainSearchWrap.style.display = 'none';
     motiBanner.style.display = 'none';
@@ -1490,13 +1659,23 @@ document.getElementById('tabs').addEventListener('click', (e) => {
   } else if (currentSection === 'sqlprobs') {
     sqlProbsSection.classList.add('visible');
     dsaSection.classList.remove('visible');
+    companySection.classList.remove('visible');
     topicsList.style.display = 'none';
     mainSearchWrap.style.display = 'none';
     motiBanner.style.display = 'none';
     renderSqlProbs();
+  } else if (currentSection === 'company') {
+    companySection.classList.add('visible');
+    dsaSection.classList.remove('visible');
+    sqlProbsSection.classList.remove('visible');
+    topicsList.style.display = 'none';
+    mainSearchWrap.style.display = 'none';
+    motiBanner.style.display = 'none';
+    renderCompanies();
   } else {
     dsaSection.classList.remove('visible');
     sqlProbsSection.classList.remove('visible');
+    companySection.classList.remove('visible');
     topicsList.style.display = '';
     mainSearchWrap.style.display = '';
     motiBanner.style.display = '';
@@ -1522,6 +1701,12 @@ document.getElementById('sqlpSearchInput').addEventListener('input', (e) => {
   renderSqlProbs();
 });
 
+// Company search
+document.getElementById('companySearchInput').addEventListener('input', (e) => {
+  companySearchQuery = e.target.value.trim();
+  renderCompanies();
+});
+
 // Reset
 function resetAll() {
   if (confirm('Reset all progress? This cannot be undone.')) {
@@ -1537,6 +1722,7 @@ loadState();
 renderTopics();
 renderDsa();
 renderSqlProbs();
+renderCompanies();
 updateProgress();
 </script>
 </body>
