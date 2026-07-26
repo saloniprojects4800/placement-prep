@@ -418,6 +418,7 @@
   .prob-link.dl:hover { background: rgba(245,158,11,0.1); border-color: #f59e0b; color: #fbbf24; }
   .prob-link.nd { border-color: rgba(6,182,212,0.25); color: #06b6d4; }
   .prob-link.nd:hover { background: rgba(6,182,212,0.1); border-color: #06b6d4; color: #22d3ee; }
+  .prob-link.disabled { opacity: 0.35; pointer-events: none; }
 
   /* Motivational banner */
   .moti-banner {
@@ -470,8 +471,25 @@
   /* No results */
   .no-results { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.9rem; }
 
+  .company-subheading {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--text);
+    padding: 22px 0 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .company-subheading .tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem; font-weight: 500;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
   .company-grid {
-    margin-top: 16px;
+    margin-top: 8px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 10px;
@@ -594,11 +612,22 @@
       <p>Top interview questions asked at each company 🏢</p>
     </div>
 
+    <div class="dsa-progress-wrap">
+      <div class="dsa-progress-label">
+        <span id="compDone">0</span><span style="color:var(--muted);font-family:'DM Sans';font-weight:400"> / <span id="compTotal">0</span> solved</span>
+        <span id="compPct">0%</span>
+      </div>
+      <div class="dsa-bar-outer"><div class="dsa-bar-inner" id="compBar" style="width:0%;background:linear-gradient(90deg,#06b6d4,#22d3ee);"></div></div>
+    </div>
+
     <div class="dsa-search-wrap">
       <span class="dsa-search-icon">⌕</span>
       <input class="dsa-search-input" id="companySearchInput" type="text" placeholder="Search companies..." />
     </div>
 
+    <div id="companyCurated" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;"></div>
+
+    <div id="companyMoreHeading" class="company-subheading">More companies <span class="tag">opens full list on NamasteDev</span></div>
     <div id="companyGrid" class="company-grid"></div>
     <div id="companyNoResults" class="no-results hidden">No companies match your search.</div>
   </div>
@@ -612,6 +641,7 @@
 const STORAGE_KEY = 'saloni_placement_checklist_v1';
 const DSA_STORAGE_KEY = 'saloni_dsa_checklist_v1';
 const SQL_Q_STORAGE_KEY = 'saloni_sql_questions_v1';
+const COMPANY_Q_STORAGE_KEY = 'saloni_company_questions_v1';
 
 // ======================== NON-DSA DATA ========================
 const data = [
@@ -1218,7 +1248,321 @@ const sqlQuestions = [
   ]},
 ];
 
-// ======================== COMPANYWISE DSA QUESTIONS ========================
+// ======================== COMPANYWISE DSA QUESTIONS (curated, with direct links) ========================
+// Extracted from NamasteDev's per-company pages. Entries with no LeetCode link are
+// NamasteDev's own custom problems (gated behind their login), shown title-only.
+const companyQuestions = {
+  microsoft: { name: 'Microsoft', color: '#00a4ef', icon: '🪟', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-microsoft', problems: [
+    { title: 'LRU Cache', lc: 'https://leetcode.com/problems/lru-cache/' },
+    { title: 'Reverse a Linked List', lc: 'https://leetcode.com/problems/reverse-linked-list/' },
+    { title: 'Longest Increasing Subsequence (LIS)', lc: 'https://leetcode.com/problems/longest-increasing-subsequence/' },
+    { title: 'Search Rotated Sorted Array', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+    { title: 'Clone List with Random Pointer', lc: 'https://leetcode.com/problems/copy-list-with-random-pointer/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+    { title: 'Maximum Product Subarray', lc: 'https://leetcode.com/problems/maximum-product-subarray/' },
+    { title: 'Lowest Common Ancestor in Binary Tree', lc: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/' },
+    { title: 'Three Sum', lc: 'https://leetcode.com/problems/3sum/' },
+    { title: 'Number of Islands', lc: 'https://leetcode.com/problems/number-of-islands/' },
+    { title: 'Longest Substring Without Repeat', lc: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/' },
+    { title: 'Merge Two Sorted Linked List', lc: 'https://leetcode.com/problems/merge-two-sorted-lists/' },
+    { title: 'Wildcard Matching', lc: 'https://leetcode.com/problems/wildcard-matching/' },
+    { title: 'Next Greater Element', lc: 'https://leetcode.com/problems/next-greater-element-i/' },
+    { title: 'Rotate a Linked List', lc: 'https://leetcode.com/problems/rotate-list/' },
+    { title: 'Coin Change', lc: 'https://leetcode.com/problems/coin-change/' },
+    { title: 'Flatten Binary Tree to Linked List', lc: 'https://leetcode.com/problems/flatten-binary-tree-to-linked-list/' },
+    { title: 'Reverse a Linked List in k-groups', lc: 'https://leetcode.com/problems/reverse-nodes-in-k-group/' },
+    { title: 'Longest Consecutive Sequence', lc: 'https://leetcode.com/problems/longest-consecutive-sequence/' },
+    { title: 'Generate Parentheses', lc: 'https://leetcode.com/problems/generate-parentheses/' },
+    { title: 'Kth Largest in BST', lc: 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/' },
+    { title: 'Symmetric Binary Tree', lc: 'https://leetcode.com/problems/symmetric-tree/' },
+    { title: 'Trapping Rain Water', lc: 'https://leetcode.com/problems/trapping-rain-water/' },
+    { title: 'Combination Sum 2', lc: 'https://leetcode.com/problems/combination-sum-ii/' },
+    { title: 'Four Sum', lc: 'https://leetcode.com/problems/4sum/' },
+    { title: 'Sliding Window Maximum', lc: 'https://leetcode.com/problems/sliding-window-maximum/' },
+    { title: 'Palindrome Partitioning', lc: 'https://leetcode.com/problems/palindrome-partitioning/' },
+    { title: 'Sudoku Solver', lc: 'https://leetcode.com/problems/sudoku-solver/' },
+    { title: 'Construct Binary Tree from Preorder and Inorder Traversal', lc: 'https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/' },
+    { title: 'Invert Binary Tree', lc: 'https://leetcode.com/problems/invert-binary-tree/' },
+    { title: 'Best Time to Buy and Sell Stocks', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/' },
+    { title: 'Distinct Numbers in Window' },
+    { title: 'Collect Jewels' },
+    { title: 'Matrix Paths' },
+    { title: 'Maximum path sum in matrix' },
+    { title: 'Top View of Binary Tree' },
+    { title: 'Left View of Binary Tree' },
+    { title: 'Implement Min Stack', lc: 'https://leetcode.com/problems/min-stack/' },
+    { title: 'Clone a Graph', lc: 'https://leetcode.com/problems/clone-graph/' },
+    { title: 'Longest Palindromic Substring (LPS)', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+  ]},
+  amazon: { name: 'Amazon', color: '#ff9900', icon: '📦', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-amazon', problems: [
+    { title: 'Two Sum', lc: 'https://leetcode.com/problems/two-sum/' },
+    { title: 'Number of Islands', lc: 'https://leetcode.com/problems/number-of-islands/' },
+    { title: 'Search Rotated Sorted Array', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+    { title: 'LRU Cache', lc: 'https://leetcode.com/problems/lru-cache/' },
+    { title: 'Reverse a Linked List', lc: 'https://leetcode.com/problems/reverse-linked-list/' },
+    { title: 'Longest Substring Without Repeat', lc: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/' },
+    { title: 'Merge Overlapping Intervals', lc: 'https://leetcode.com/problems/merge-intervals/' },
+    { title: 'Trapping Rain Water', lc: 'https://leetcode.com/problems/trapping-rain-water/' },
+    { title: 'Kth Largest Element', lc: 'https://leetcode.com/problems/kth-largest-element-in-an-array/' },
+    { title: 'Clone List with Random Pointer', lc: 'https://leetcode.com/problems/copy-list-with-random-pointer/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+    { title: 'Sliding Window Maximum', lc: 'https://leetcode.com/problems/sliding-window-maximum/' },
+    { title: 'Longest Consecutive Sequence', lc: 'https://leetcode.com/problems/longest-consecutive-sequence/' },
+    { title: 'Three Sum', lc: 'https://leetcode.com/problems/3sum/' },
+    { title: 'Maximum Product Subarray', lc: 'https://leetcode.com/problems/maximum-product-subarray/' },
+    { title: 'Lowest Common Ancestor in Binary Tree', lc: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/' },
+    { title: 'Longest Increasing Subsequence (LIS)', lc: 'https://leetcode.com/problems/longest-increasing-subsequence/' },
+    { title: 'Generate Parentheses', lc: 'https://leetcode.com/problems/generate-parentheses/' },
+    { title: 'Palindrome Partitioning', lc: 'https://leetcode.com/problems/palindrome-partitioning/' },
+    { title: 'Coin Change', lc: 'https://leetcode.com/problems/coin-change/' },
+    { title: 'Valid Course Schedule', lc: 'https://leetcode.com/problems/course-schedule/' },
+    { title: 'Four Sum', lc: 'https://leetcode.com/problems/4sum/' },
+    { title: 'Restore IP Addresses', lc: 'https://leetcode.com/problems/restore-ip-addresses/' },
+    { title: 'N Queens Problem', lc: 'https://leetcode.com/problems/n-queens/' },
+    { title: 'Letter Combinations of a Phone Number', lc: 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/' },
+    { title: 'Sudoku Solver', lc: 'https://leetcode.com/problems/sudoku-solver/' },
+    { title: 'Longest Common Subsequence (LCS)', lc: 'https://leetcode.com/problems/longest-common-subsequence/' },
+    { title: 'Edit Distance (Levenshtein Distance)', lc: 'https://leetcode.com/problems/edit-distance/' },
+    { title: 'Kth Smallest in BST', lc: 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/' },
+    { title: 'Maximum Path Sum of Binary Tree', lc: 'https://leetcode.com/problems/binary-tree-maximum-path-sum/' },
+    { title: 'Word Search Board', lc: 'https://leetcode.com/problems/word-search/' },
+    { title: 'Balanced Parentheses', lc: 'https://leetcode.com/problems/valid-parentheses/' },
+    { title: 'Best Time to Buy and Sell Stocks', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/' },
+    { title: 'Longest Palindromic Substring (LPS)', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+    { title: 'Combination Sum 2', lc: 'https://leetcode.com/problems/combination-sum-ii/' },
+    { title: 'Symmetric Binary Tree', lc: 'https://leetcode.com/problems/symmetric-tree/' },
+    { title: 'Invert Binary Tree', lc: 'https://leetcode.com/problems/invert-binary-tree/' },
+    { title: 'Populating Next Right Pointers in Each Node', lc: 'https://leetcode.com/problems/populating-next-right-pointers-in-each-node/' },
+    { title: 'Kth Largest Element From Data Stream', lc: 'https://leetcode.com/problems/kth-largest-element-in-a-stream/' },
+    { title: 'Dutch National Flag', lc: 'https://leetcode.com/problems/sort-colors/' },
+    { title: 'Longest Subarray with Zero Sum' },
+    { title: 'Median of Row-wise Sorted Matrix' },
+    { title: 'Rotting Apples' },
+    { title: 'Bottom View of Binary Tree' },
+    { title: 'Collect Jewels' },
+    { title: "Knight's Journey On A Chessboard" },
+    { title: 'Stepping Numbers' },
+    { title: 'Max Meetings in a Room' },
+    { title: 'Maximum k-Substring Vowels' },
+    { title: 'Trains and Platforms' },
+  ]},
+  google: { name: 'Google', color: '#4285f4', icon: '🔍', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-google', problems: [
+    { title: 'Two Sum', lc: 'https://leetcode.com/problems/two-sum/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+    { title: 'Number of Islands', lc: 'https://leetcode.com/problems/number-of-islands/' },
+    { title: 'Merge Overlapping Intervals', lc: 'https://leetcode.com/problems/merge-intervals/' },
+    { title: 'Longest Common Prefix', lc: 'https://leetcode.com/problems/longest-common-prefix/' },
+    { title: 'LRU Cache', lc: 'https://leetcode.com/problems/lru-cache/' },
+    { title: 'Kth Smallest in BST', lc: 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/' },
+    { title: "Pascal's Triangle", lc: 'https://leetcode.com/problems/pascals-triangle/' },
+    { title: 'Word Ladder', lc: 'https://leetcode.com/problems/word-ladder/' },
+    { title: 'Sliding Window Maximum', lc: 'https://leetcode.com/problems/sliding-window-maximum/' },
+    { title: 'Unique Paths', lc: 'https://leetcode.com/problems/unique-paths/' },
+    { title: 'Clone a Graph', lc: 'https://leetcode.com/problems/clone-graph/' },
+    { title: 'Balanced Parentheses', lc: 'https://leetcode.com/problems/valid-parentheses/' },
+    { title: 'Longest Palindromic Substring (LPS)', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+    { title: 'Matrix Rotation', lc: 'https://leetcode.com/problems/rotate-image/' },
+    { title: 'Best Time to Buy and Sell Stocks', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/' },
+    { title: 'Generate Parentheses', lc: 'https://leetcode.com/problems/generate-parentheses/' },
+    { title: 'Capture Surrounded Regions', lc: 'https://leetcode.com/problems/surrounded-regions/' },
+    { title: 'Median From Data Stream', lc: 'https://leetcode.com/problems/find-median-from-data-stream/' },
+    { title: 'Longest Substring Without Repeat', lc: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/' },
+    { title: 'Palindrome Partitioning', lc: 'https://leetcode.com/problems/palindrome-partitioning/' },
+    { title: 'Search Rotated Sorted Array', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+    { title: 'Valid Course Schedule', lc: 'https://leetcode.com/problems/course-schedule/' },
+    { title: 'Four Sum', lc: 'https://leetcode.com/problems/4sum/' },
+    { title: 'Sudoku Solver', lc: 'https://leetcode.com/problems/sudoku-solver/' },
+    { title: 'Largest Contiguous Sum', lc: 'https://leetcode.com/problems/maximum-subarray/' },
+    { title: 'Edit Distance', lc: 'https://leetcode.com/problems/edit-distance/' },
+    { title: 'Flood Fill Image', lc: 'https://leetcode.com/problems/flood-fill/' },
+    { title: 'Merge Sort Linked List', lc: 'https://leetcode.com/problems/sort-list/' },
+    { title: 'Longest Common Subsequence (LCS)', lc: 'https://leetcode.com/problems/longest-common-subsequence/' },
+    { title: 'Invert Binary Tree', lc: 'https://leetcode.com/problems/invert-binary-tree/' },
+    { title: 'Wildcard Matching', lc: 'https://leetcode.com/problems/wildcard-matching/' },
+    { title: 'Largest Rectangle in Histogram', lc: 'https://leetcode.com/problems/largest-rectangle-in-histogram/' },
+    { title: 'Matrix Search', lc: 'https://leetcode.com/problems/search-a-2d-matrix/' },
+    { title: 'N Queens Problem', lc: 'https://leetcode.com/problems/n-queens/' },
+    { title: 'Two Sum in BST', lc: 'https://leetcode.com/problems/two-sum-iv-input-is-a-bst/' },
+    { title: 'Insertion Sort Linked List', lc: 'https://leetcode.com/problems/insertion-sort-list/' },
+    { title: 'Palindrome Partitioning 2', lc: 'https://leetcode.com/problems/palindrome-partitioning-ii/' },
+    { title: 'Best Time to Buy and Sell Stock IV', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/' },
+    { title: 'Longest Substring with K Unique Characters', lc: 'https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/' },
+    { title: 'Next Greater Element', lc: 'https://leetcode.com/problems/next-greater-element-i/' },
+    { title: 'Word Break II', lc: 'https://leetcode.com/problems/word-break-ii/' },
+    { title: 'Unique Elements in Sorted Array', lc: 'https://leetcode.com/problems/remove-duplicates-from-sorted-array/' },
+    { title: 'Subset Sum', lc: 'https://leetcode.com/problems/partition-equal-subset-sum/' },
+    { title: 'Exponentiation With Modulus', lc: 'https://leetcode.com/problems/powx-n/' },
+    { title: 'Sorted Arrays Intersection', lc: 'https://leetcode.com/problems/intersection-of-two-arrays-ii/' },
+    { title: 'Maximum Sum Increasing Subsequence', lc: 'https://leetcode.com/problems/maximum-sum-increasing-subsequence/' },
+    { title: 'Minimum Egg Drops', lc: 'https://leetcode.com/problems/super-egg-drop/' },
+    { title: 'Rod Cutting', lc: 'https://leetcode.com/problems/minimum-cost-to-cut-a-stick/' },
+    { title: 'Substring Search II', lc: 'https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/' },
+    { title: 'Shortest Unique Prefix' },
+    { title: 'Restaurant Reviews' },
+  ]},
+  meta: { name: 'Meta', color: '#0866ff', icon: '📘', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-meta', problems: [
+    { title: 'Median From Data Stream', lc: 'https://leetcode.com/problems/find-median-from-data-stream/' },
+    { title: 'Regular Expression Matching', lc: 'https://leetcode.com/problems/regular-expression-matching/' },
+    { title: 'Largest Rectangle in Histogram', lc: 'https://leetcode.com/problems/largest-rectangle-in-histogram/' },
+    { title: 'Serialize and Deserialize BST', lc: 'https://leetcode.com/problems/serialize-and-deserialize-bst/' },
+    { title: 'Clone a Graph', lc: 'https://leetcode.com/problems/clone-graph/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+    { title: 'Three Sum', lc: 'https://leetcode.com/problems/3sum/' },
+    { title: 'Search Rotated Sorted Array', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+    { title: 'Matrix Rotation', lc: 'https://leetcode.com/problems/rotate-image/' },
+    { title: 'Reverse a Linked List II', lc: 'https://leetcode.com/problems/reverse-linked-list-ii/' },
+    { title: 'BST Iterator', lc: 'https://leetcode.com/problems/binary-search-tree-iterator/' },
+    { title: 'Binary Tree to Doubly Linked List' },
+    { title: 'Diameter of Binary Tree', lc: 'https://leetcode.com/problems/diameter-of-binary-tree/' },
+    { title: 'Maximum Depth of Binary Tree', lc: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/' },
+    { title: 'Level Order of Binary Tree', lc: 'https://leetcode.com/problems/binary-tree-level-order-traversal/' },
+    { title: 'Longest Palindromic Substring', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+    { title: 'Best Time to Buy and Sell Stock IV', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/' },
+    { title: 'Best Time to Buy and Sell Stock III', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/' },
+    { title: 'Combination Sum', lc: 'https://leetcode.com/problems/combination-sum/' },
+    { title: 'String Permutations', lc: 'https://leetcode.com/problems/permutations/' },
+    { title: 'Sorted Arrays Intersection', lc: 'https://leetcode.com/problems/intersection-of-two-arrays-ii/' },
+    { title: 'Count And Say', lc: 'https://leetcode.com/problems/count-and-say/' },
+    { title: 'Reverse Words in String', lc: 'https://leetcode.com/problems/reverse-words-in-a-string/' },
+    { title: 'Roman Numeral to Integer', lc: 'https://leetcode.com/problems/roman-to-integer/' },
+    { title: 'Integer to Roman Numeral', lc: 'https://leetcode.com/problems/integer-to-roman/' },
+    { title: 'K-diff Pairs in an Array', lc: 'https://leetcode.com/problems/k-diff-pairs-in-an-array/' },
+    { title: 'Maximum K-Subarray Sum' },
+    { title: 'Square Root', lc: 'https://leetcode.com/problems/sqrtx/' },
+    { title: 'Largest Contiguous Sum', lc: 'https://leetcode.com/problems/maximum-subarray/' },
+  ]},
+  apple: { name: 'Apple', color: '#a3a3a3', icon: '🍎', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-apple', problems: [
+    { title: 'Median From Data Stream', lc: 'https://leetcode.com/problems/find-median-from-data-stream/' },
+    { title: 'Clone a Graph', lc: 'https://leetcode.com/problems/clone-graph/' },
+    { title: 'Coin Change', lc: 'https://leetcode.com/problems/coin-change/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+    { title: 'Best Time to Buy and Sell Stock IV', lc: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/' },
+    { title: 'Serialize and Deserialize BST', lc: 'https://leetcode.com/problems/serialize-and-deserialize-bst/' },
+    { title: 'Longest Palindromic Substring (LPS)', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+    { title: 'Flood Fill Image', lc: 'https://leetcode.com/problems/flood-fill/' },
+    { title: 'Right View of Binary Tree', lc: 'https://leetcode.com/problems/binary-tree-right-side-view/' },
+    { title: 'Count And Say', lc: 'https://leetcode.com/problems/count-and-say/' },
+    { title: 'Reverse Words in String', lc: 'https://leetcode.com/problems/reverse-words-in-a-string/' },
+    { title: 'Excel Column Number', lc: 'https://leetcode.com/problems/excel-sheet-column-number/' },
+    { title: 'Maximum K-Subarray Sum', lc: 'https://leetcode.com/problems/maximum-average-subarray-i/' },
+    { title: 'Insert Minimum To Make Palindrome', lc: 'https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/' },
+  ]},
+  adobe: { name: 'Adobe', color: '#ff0000', icon: '🅰️', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-adobe', problems: [
+    { title: 'LRU Cache', lc: 'https://leetcode.com/problems/lru-cache/' },
+    { title: 'Reverse a Linked List', lc: 'https://leetcode.com/problems/reverse-linked-list/' },
+    { title: 'Decode Ways', lc: 'https://leetcode.com/problems/decode-ways/' },
+    { title: 'Generate Parentheses', lc: 'https://leetcode.com/problems/generate-parentheses/' },
+    { title: 'Clone List with Random Pointer', lc: 'https://leetcode.com/problems/copy-list-with-random-pointer/' },
+    { title: 'Search Rotated Sorted Array', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+    { title: 'Four Sum', lc: 'https://leetcode.com/problems/4sum/' },
+    { title: 'Level Order of Binary Tree', lc: 'https://leetcode.com/problems/binary-tree-level-order-traversal/' },
+    { title: 'Longest Palindromic Substring (LPS)', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+    { title: 'Implement Min Stack', lc: 'https://leetcode.com/problems/min-stack/' },
+    { title: 'Palindrome Partitioning 2', lc: 'https://leetcode.com/problems/palindrome-partitioning-ii/' },
+    { title: 'Invert Binary Tree', lc: 'https://leetcode.com/problems/invert-binary-tree/' },
+    { title: 'Combinations', lc: 'https://leetcode.com/problems/combinations/' },
+    { title: 'Flatten Binary Tree to Linked List', lc: 'https://leetcode.com/problems/flatten-binary-tree-to-linked-list/' },
+    { title: 'Implement Queue using Stacks', lc: 'https://leetcode.com/problems/implement-queue-using-stacks/' },
+    { title: 'Implement Stack using Queues', lc: 'https://leetcode.com/problems/implement-stack-using-queues/' },
+    { title: 'Combination Sum 1', lc: 'https://leetcode.com/problems/combination-sum/' },
+    { title: 'Linked List Palindrome', lc: 'https://leetcode.com/problems/palindrome-linked-list/' },
+    { title: 'Climbing Stairs', lc: 'https://leetcode.com/problems/climbing-stairs/' },
+    { title: 'Merge Two Sorted Linked List', lc: 'https://leetcode.com/problems/merge-two-sorted-lists/' },
+    { title: 'Insert into a BST', lc: 'https://leetcode.com/problems/insert-into-a-binary-search-tree/' },
+    { title: 'Delete Node in a BST', lc: 'https://leetcode.com/problems/delete-node-in-a-bst/' },
+    { title: 'Greatest Common Divisor', lc: 'https://leetcode.com/problems/find-greatest-common-divisor-of-array/' },
+    { title: 'Anagrams', lc: 'https://leetcode.com/problems/valid-anagram/' },
+    { title: 'Roman Numeral to Integer', lc: 'https://leetcode.com/problems/roman-to-integer/' },
+    { title: 'Integer to Roman Numeral', lc: 'https://leetcode.com/problems/integer-to-roman/' },
+    { title: 'Middle Element of Linked List', lc: 'https://leetcode.com/problems/middle-of-the-linked-list/' },
+    { title: 'Find xth Node from End of Linked List', lc: 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/' },
+    { title: 'Is Binary Tree BST', lc: 'https://leetcode.com/problems/validate-binary-search-tree/' },
+    { title: 'Reverse Words in String', lc: 'https://leetcode.com/problems/reverse-words-in-a-string/' },
+    { title: 'Inversion Count' },
+    { title: 'Implement Quicksort' },
+    { title: 'Remove Loop From Linked List' },
+    { title: 'Top View of Binary Tree' },
+    { title: 'Right View of Binary Tree' },
+    { title: 'Left View of Binary Tree' },
+    { title: 'Detect Cycle In Undirected Graph' },
+    { title: 'DFS of a Cyclic Graph' },
+    { title: 'DFS of an Acyclic Graph' },
+    { title: 'Substring Search - I' },
+    { title: 'Insert Minimum To Make Palindrome (II)' },
+    { title: 'Matrix Paths' },
+  ]},
+  uber: { name: 'Uber', color: '#000000', icon: '🚗', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-uber', problems: [
+    { title: 'Serialize and Deserialize BST', lc: 'https://leetcode.com/problems/serialize-and-deserialize-bst/' },
+    { title: 'Edit Distance', lc: 'https://leetcode.com/problems/edit-distance/' },
+    { title: 'Clone a Graph', lc: 'https://leetcode.com/problems/clone-graph/' },
+    { title: 'Decode Ways', lc: 'https://leetcode.com/problems/decode-ways/' },
+    { title: 'Longest Common Subsequence (LCS)', lc: 'https://leetcode.com/problems/longest-common-subsequence/' },
+    { title: 'Right View of Binary Tree' },
+    { title: 'BST Iterator', lc: 'https://leetcode.com/problems/binary-search-tree-iterator/' },
+    { title: 'Path Exists in Directed Graph' },
+    { title: 'Longest Palindromic Substring', lc: 'https://leetcode.com/problems/longest-palindromic-substring/' },
+    { title: 'Roman Numeral to Integer', lc: 'https://leetcode.com/problems/roman-to-integer/' },
+    { title: 'Trailing Zeroes', lc: 'https://leetcode.com/problems/factorial-trailing-zeroes/' },
+    { title: 'Word Ladder', lc: 'https://leetcode.com/problems/word-ladder/' },
+    { title: 'Course Schedule', lc: 'https://leetcode.com/problems/course-schedule/' },
+    { title: 'Number of Islands', lc: 'https://leetcode.com/problems/number-of-islands/' },
+    { title: 'LRU Cache', lc: 'https://leetcode.com/problems/lru-cache/' },
+    { title: 'Find Median From Data Stream', lc: 'https://leetcode.com/problems/find-median-from-data-stream/' },
+    { title: 'K Closest Points to Origin', lc: 'https://leetcode.com/problems/k-closest-points-to-origin/' },
+    { title: 'Meeting Rooms II', lc: 'https://leetcode.com/problems/meeting-rooms-ii/' },
+    { title: 'Merge Intervals', lc: 'https://leetcode.com/problems/merge-intervals/' },
+    { title: 'Top K Frequent Elements', lc: 'https://leetcode.com/problems/top-k-frequent-elements/' },
+    { title: 'Sliding Window Maximum', lc: 'https://leetcode.com/problems/sliding-window-maximum/' },
+    { title: 'Network Delay Time', lc: 'https://leetcode.com/problems/network-delay-time/' },
+    { title: 'Cheapest Flights Within K Stops', lc: 'https://leetcode.com/problems/cheapest-flights-within-k-stops/' },
+    { title: 'Reconstruct Itinerary', lc: 'https://leetcode.com/problems/reconstruct-itinerary/' },
+    { title: 'Design Underground System', lc: 'https://leetcode.com/problems/design-underground-system/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+  ]},
+  flipkart: { name: 'Flipkart', color: '#2874f0', icon: '🛒', source: 'https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-flipkart', problems: [
+    { title: 'LRU Cache', lc: 'https://leetcode.com/problems/lru-cache/' },
+    { title: 'Sliding Window Maximum', lc: 'https://leetcode.com/problems/sliding-window-maximum/' },
+    { title: 'Search in Rotated Sorted Array', lc: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' },
+    { title: 'Two Sum', lc: 'https://leetcode.com/problems/two-sum/' },
+    { title: 'Inversion Count', lc: 'https://leetcode.com/problems/count-of-smaller-numbers-after-self/' },
+    { title: 'Intersection of Two Linked Lists', lc: 'https://leetcode.com/problems/intersection-of-two-linked-lists/' },
+    { title: 'Middle Element of Linked List', lc: 'https://leetcode.com/problems/middle-of-the-linked-list/' },
+    { title: 'Add Two Numbers as Lists', lc: 'https://leetcode.com/problems/add-two-numbers/' },
+    { title: 'Flatten a Multi-Level Linked List', lc: 'https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/' },
+    { title: 'Implement Queue using Stacks', lc: 'https://leetcode.com/problems/implement-queue-using-stacks/' },
+    { title: 'Next Greater Element', lc: 'https://leetcode.com/problems/next-greater-element-i/' },
+    { title: 'Letter Combinations of a Phone Number', lc: 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/' },
+    { title: 'Lowest Common Ancestor of a Binary Tree', lc: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/' },
+    { title: 'Bottom View of Binary Tree' },
+    { title: 'Kth Largest Element From Data Stream', lc: 'https://leetcode.com/problems/kth-largest-element-in-a-stream/' },
+    { title: 'Validate Binary Search Tree', lc: 'https://leetcode.com/problems/validate-binary-search-tree/' },
+    { title: 'Lowest Common Ancestor in BST', lc: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/' },
+    { title: 'Serialize and Deserialize BST', lc: 'https://leetcode.com/problems/serialize-and-deserialize-bst/' },
+    { title: 'Collect Jewels' },
+    { title: 'Maximum Path Sum in Matrix' },
+    { title: 'Detect Cycle in Directed Graph', lc: 'https://leetcode.com/problems/course-schedule/' },
+    { title: 'DFS of an Acyclic Graph' },
+    { title: 'Palindrome' },
+    { title: 'Vowels' },
+    { title: 'Substring Search IV' },
+    { title: 'Merge Intervals', lc: 'https://leetcode.com/problems/merge-intervals/' },
+    { title: 'Trapping Rain Water', lc: 'https://leetcode.com/problems/trapping-rain-water/' },
+    { title: 'Word Break', lc: 'https://leetcode.com/problems/word-break/' },
+    { title: 'Number of Islands', lc: 'https://leetcode.com/problems/number-of-islands/' },
+    { title: 'Course Schedule', lc: 'https://leetcode.com/problems/course-schedule/' },
+    { title: 'Clone Graph', lc: 'https://leetcode.com/problems/clone-graph/' },
+    { title: 'Top K Frequent Elements', lc: 'https://leetcode.com/problems/top-k-frequent-elements/' },
+    { title: 'Kth Largest Element in an Array', lc: 'https://leetcode.com/problems/kth-largest-element-in-an-array/' },
+    { title: 'Longest Consecutive Sequence', lc: 'https://leetcode.com/problems/longest-consecutive-sequence/' },
+    { title: 'Product of Array Except Self', lc: 'https://leetcode.com/problems/product-of-array-except-self/' },
+    { title: 'Median from Data Stream', lc: 'https://leetcode.com/problems/find-median-from-data-stream/' },
+    { title: 'Meeting Rooms II', lc: 'https://leetcode.com/problems/meeting-rooms-ii/' },
+    { title: 'Design Underground System', lc: 'https://leetcode.com/problems/design-underground-system/' },
+    { title: 'Minimum Window Substring', lc: 'https://leetcode.com/problems/minimum-window-substring/' },
+  ]},
+};
+
+// ======================== COMPANYWISE DSA QUESTIONS (link-out only) ========================
 const companies = [
   'Google','Cisco','Microsoft','Meta','Adobe','Codenation','Directi','Amazon','Zoho','Apple',
   'Barclays','Myntra','Paytm','SAP Labs','Uber','Amdocs','Visa','Zenefits','Yahoo','VMware',
@@ -1228,13 +1572,15 @@ const companies = [
 ].map(name => {
   const slugOverrides = { 'D. E. Shaw': 'de-shaw', 'Info Edge': 'infoedge' };
   const slug = slugOverrides[name] || name.toLowerCase().replace(/\./g, '').replace(/\s+/g, '-');
-  return { name, url: `https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-${slug}` };
-});
+  const curatedKey = Object.keys(companyQuestions).find(k => companyQuestions[k].name === name);
+  return { name, url: `https://namastedev.com/topics/dsa-interview-questions/top-dsa-interview-questions-asked-in-${slug}`, curated: curatedKey || null };
+}).filter(c => !c.curated); // curated companies get their own expandable chapter; rest stay as link-out cards
 
 // ======================== STATE ========================
 let checkedState = {};
 let dsaState = {};
 let sqlQState = {};
+let companyQState = {};
 let currentSection = 'all';
 let searchQuery = '';
 let dsaSearchQuery = '';
@@ -1243,15 +1589,18 @@ function loadState() {
   try { checkedState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { checkedState = {}; }
   try { dsaState = JSON.parse(localStorage.getItem(DSA_STORAGE_KEY)) || {}; } catch { dsaState = {}; }
   try { sqlQState = JSON.parse(localStorage.getItem(SQL_Q_STORAGE_KEY)) || {}; } catch { sqlQState = {}; }
+  try { companyQState = JSON.parse(localStorage.getItem(COMPANY_Q_STORAGE_KEY)) || {}; } catch { companyQState = {}; }
 }
 
 function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState)); }
 function saveDsaState() { localStorage.setItem(DSA_STORAGE_KEY, JSON.stringify(dsaState)); }
 function saveSqlQState() { localStorage.setItem(SQL_Q_STORAGE_KEY, JSON.stringify(sqlQState)); }
+function saveCompanyQState() { localStorage.setItem(COMPANY_Q_STORAGE_KEY, JSON.stringify(companyQState)); }
 
 function getTopicKey(section, topicIdx) { return `${section}_${topicIdx}`; }
 function getDsaKey(chapterId, probIdx) { return `${chapterId}_${probIdx}`; }
 function getSqlQKey(diffId, qIdx) { return `sqlq_${diffId}_${qIdx}`; }
+function getCompanyQKey(companyKey, probIdx) { return `compq_${companyKey}_${probIdx}`; }
 
 // ======================== PROGRESS ========================
 function countForSection(section) {
@@ -1284,6 +1633,23 @@ function countSqlQ() {
   return { total, done };
 }
 
+function countCompanyQ() {
+  let total = 0, done = 0;
+  Object.keys(companyQuestions).forEach(key => {
+    companyQuestions[key].problems.forEach((_, i) => {
+      total++;
+      if (companyQState[getCompanyQKey(key, i)]) done++;
+    });
+  });
+  return { total, done };
+}
+
+function getCompanyChapterDoneCount(key) {
+  let done = 0;
+  companyQuestions[key].problems.forEach((_, i) => { if (companyQState[getCompanyQKey(key, i)]) done++; });
+  return done;
+}
+
 function updateProgress() {
   let total = 0, done = 0;
   data.forEach(sec => {
@@ -1300,6 +1666,10 @@ function updateProgress() {
   const sqlq = countSqlQ();
   total += sqlq.total;
   done += sqlq.done;
+
+  const compq = countCompanyQ();
+  total += compq.total;
+  done += compq.done;
 
   const pct = total ? Math.round(done / total * 100) : 0;
   document.getElementById('progressBar').style.width = pct + '%';
@@ -1324,6 +1694,14 @@ function updateProgress() {
   const dsaPct = dsa.total ? Math.round(dsa.done / dsa.total * 100) : 0;
   document.getElementById('dsaBar').style.width = dsaPct + '%';
   document.getElementById('dsaPct').textContent = dsaPct + '%';
+
+  // Company count
+  document.getElementById('cnt-company').textContent = `${compq.done}/${compq.total}`;
+  document.getElementById('compDone').textContent = compq.done;
+  document.getElementById('compTotal').textContent = compq.total;
+  const compPct = compq.total ? Math.round(compq.done / compq.total * 100) : 0;
+  document.getElementById('compBar').style.width = compPct + '%';
+  document.getElementById('compPct').textContent = compPct + '%';
 
   const banner = document.getElementById('motiBanner');
   const quotes = ["Good start — keep the momentum going.","25% done. Solid progress, keep pushing.","Halfway there. Stay consistent.","75% done. The finish line is close.","100% complete. Every topic covered."];
@@ -1611,15 +1989,92 @@ function renderDsa() {
 let companySearchQuery = '';
 
 function renderCompanies() {
+  const curatedContainer = document.getElementById('companyCurated');
   const grid = document.getElementById('companyGrid');
   const noResults = document.getElementById('companyNoResults');
+  const moreHeading = document.getElementById('companyMoreHeading');
+  curatedContainer.innerHTML = '';
   grid.innerHTML = '';
 
-  const filtered = companySearchQuery
-    ? companies.filter(c => c.name.toLowerCase().includes(companySearchQuery.toLowerCase()))
+  const q = companySearchQuery.toLowerCase();
+
+  // --- Curated companies (expandable chapters with direct solve links) ---
+  const curatedKeys = Object.keys(companyQuestions).filter(key => {
+    if (!q) return true;
+    return companyQuestions[key].name.toLowerCase().includes(q);
+  });
+
+  curatedKeys.forEach(key => {
+    const co = companyQuestions[key];
+    const done = getCompanyChapterDoneCount(key);
+    const total = co.problems.length;
+
+    const chEl = document.createElement('div');
+    chEl.className = 'dsa-chapter';
+    chEl.dataset.id = key;
+
+    const badgeBg = done === total && total > 0 ? 'rgba(16,185,129,0.15)' : `${co.color}22`;
+    const badgeColor = done === total && total > 0 ? '#10b981' : co.color;
+
+    chEl.innerHTML = `
+      <div class="chapter-mini-bar" style="background:linear-gradient(90deg,${co.color},transparent);opacity:0.5;"></div>
+      <div class="dsa-chapter-header">
+        <div class="chapter-icon" style="background:${co.color}22;color:${co.color};font-size:18px;">${co.icon}</div>
+        <div class="chapter-info">
+          <div class="chapter-name">${co.name}</div>
+          <div class="chapter-sub">${total} problems · direct links</div>
+        </div>
+        <div class="chapter-meta">
+          <span class="chapter-done-badge" style="background:${badgeBg};color:${badgeColor};border:1px solid ${badgeColor}33;">
+            ${done}/${total}
+          </span>
+          <span class="chapter-chevron">▾</span>
+        </div>
+      </div>
+      <div class="dsa-problems" id="compprobs-${key}"></div>
+    `;
+
+    chEl.querySelector('.dsa-chapter-header').addEventListener('click', () => chEl.classList.toggle('open'));
+    const probsContainer = chEl.querySelector(`#compprobs-${key}`);
+
+    co.problems.forEach((prob, i) => {
+      const pKey = getCompanyQKey(key, i);
+      const row = document.createElement('div');
+      row.className = `dsa-problem-row${companyQState[pKey] ? ' pdone' : ''}`;
+      row.innerHTML = `
+        <div class="prob-check" title="Mark as done"><span class="prob-check-icon">✓</span></div>
+        <span class="prob-name">${prob.title}</span>
+        ${prob.lc ? `<a class="prob-link lc" href="${prob.lc}" target="_blank" rel="noopener">LC ↗</a>` : `<span class="prob-link disabled">No link</span>`}
+      `;
+      const check = row.querySelector('.prob-check');
+      check.addEventListener('click', (e) => {
+        e.stopPropagation();
+        companyQState[pKey] = !companyQState[pKey];
+        saveCompanyQState();
+        row.classList.toggle('pdone', !!companyQState[pKey]);
+        if (companyQState[pKey]) spawnStar(e.clientX, e.clientY);
+        const newDone = getCompanyChapterDoneCount(key);
+        const badge = chEl.querySelector('.chapter-done-badge');
+        badge.textContent = `${newDone}/${total}`;
+        const newBadgeBg = newDone === total ? 'rgba(16,185,129,0.15)' : `${co.color}22`;
+        const newBadgeColor = newDone === total ? '#10b981' : co.color;
+        badge.style.background = newBadgeBg;
+        badge.style.color = newBadgeColor;
+        badge.style.borderColor = newBadgeColor + '33';
+        updateProgress();
+      });
+      probsContainer.appendChild(row);
+    });
+
+    curatedContainer.appendChild(chEl);
+  });
+
+  // --- Remaining companies (simple link-out cards) ---
+  const filteredLinkOut = q
+    ? companies.filter(c => c.name.toLowerCase().includes(q))
     : companies;
 
-  filtered.forEach(c => {
+  filteredLinkOut.forEach(c => {
     const card = document.createElement('a');
     card.className = 'company-card';
     card.href = c.url;
@@ -1629,8 +2084,9 @@ function renderCompanies() {
     grid.appendChild(card);
   });
 
-  noResults.classList.toggle('hidden', filtered.length > 0);
-  document.getElementById('cnt-company').textContent = companies.length;
+  moreHeading.style.display = filteredLinkOut.length ? '' : 'none';
+  const anyVisible = curatedKeys.length > 0 || filteredLinkOut.length > 0;
+  noResults.classList.toggle('hidden', anyVisible);
 }
 
 // ======================== TABS ========================
@@ -1710,9 +2166,9 @@ document.getElementById('companySearchInput').addEventListener('input', (e) => {
 // Reset
 function resetAll() {
   if (confirm('Reset all progress? This cannot be undone.')) {
-    checkedState = {}; dsaState = {}; sqlQState = {};
-    saveState(); saveDsaState(); saveSqlQState();
-    renderTopics(); renderDsa(); renderSqlProbs();
+    checkedState = {}; dsaState = {}; sqlQState = {}; companyQState = {};
+    saveState(); saveDsaState(); saveSqlQState(); saveCompanyQState();
+    renderTopics(); renderDsa(); renderSqlProbs(); renderCompanies();
     updateProgress();
   }
 }
